@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.Theme.TeleAula4_Mapas.MyView" parent="">
+        <item name="android:background">@color/purple_500</item>
+        <item name="exampleColor">@color/purple_500</item>
+    </style>
+</resources>

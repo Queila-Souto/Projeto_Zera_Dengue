@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.MainFragment"
+    android:background="@color/fundo">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fundo"
+        >
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/container"
+            style="@style/View2"
+            android:padding="30dp"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="15dp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_denounce"
+                style="@style/Button1"
+                android:layout_width="match_parent"
+                app:icon="@drawable/ic_baseline_add_24"
+                app:iconTint="@color/vermelho"
+                android:text="nova denúncia"
+
+                app:layout_constraintTop_toTopOf="@id/container" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_my_denounce"
+                style="@style/Button1"
+                android:layout_width="match_parent"
+                android:text="Minhas denúncias"
+                app:icon="@drawable/ic_baseline_assignment_24"
+                app:iconTint="@color/vermelho"
+                app:layout_constraintTop_toBottomOf="@id/btn_denounce" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_my_profile"
+                style="@style/Button1"
+                android:layout_width="match_parent"
+                app:icon="@drawable/ic_baseline_person_24"
+                app:iconTint="@color/vermelho"
+                android:text="Meu Perfil"
+                app:layout_constraintTop_toBottomOf="@id/btn_my_denounce"
+
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_exit"
+                style="@style/Button1"
+                android:layout_width="match_parent"
+                app:icon="@drawable/ic_baseline_exit_to_app_24"
+                app:iconTint="@color/vermelho"
+                android:text="Sair"
+                app:layout_constraintTop_toBottomOf="@id/btn_my_profile"
+
+
+                />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

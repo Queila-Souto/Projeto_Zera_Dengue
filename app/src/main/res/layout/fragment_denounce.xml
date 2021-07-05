@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.Denounce"
+    android:background="@color/fundo">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/background" style="@style/View2" android:layout_height="wrap_content" android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_cep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditText"
+                android:id="@+id/et_cep"
+                android:hint="Digite o Cep"
+                android:inputType="number"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            android:hint="Rua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_cep">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditText"
+                android:id="@+id/et_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rua"
+                android:inputType="textPostalAddress"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_number"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_street">
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditText"
+                android:id="@+id/et_number"
+                android:hint="nº"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_district"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+             app:layout_constraintEnd_toEndOf="@id/til_street"
+            app:layout_constraintTop_toBottomOf="@id/til_street">
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditText"
+                android:id="@+id/et_district"
+                android:hint="Bairro"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_complement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_number">
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/EditText"
+            android:id="@+id/et_complement"
+            android:hint="Complemento"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/til_state"
+            app:layout_constraintTop_toBottomOf="@id/til_complement">
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/EditText"
+            android:id="@+id/et_city"
+            android:inputType="text"
+            android:hint="Cidade"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/til_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            app:layout_constraintStart_toEndOf="@id/til_city"
+            app:layout_constraintTop_toBottomOf="@id/til_complement">
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditText"
+                android:id="@+id/et_state"
+                android:inputType="text"
+                android:hint="Estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/til_note"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    android:inputType="textMultiLine"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/til_city"
+    >
+
+    <com.google.android.material.textfield.TextInputEditText
+        style="@style/EditText"
+        android:id="@+id/et_note"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Observação"
+
+        />
+
+</com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_map"
+            style="@style/Button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mapa"
+            android:textSize="8dp"
+            android:layout_marginTop="4dp"
+            app:icon="@drawable/ic_baseline_add_location_alt_24"
+            app:iconTint="@color/vermelho"
+            app:layout_constraintStart_toEndOf="@id/til_cep"
+            app:layout_constraintTop_toTopOf="@id/til_cep"
+            >
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Button1"
+            android:text="Voltar"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_arrow_back_ios_24"
+            app:iconTint="@color/vermelho"
+            android:layout_margin="20dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_note" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register_loc"
+            style="@style/Button1"
+            app:icon="@drawable/ic_baseline_save_24"
+            app:iconTint="@color/vermelho"
+            android:textSize="8dp"
+            android:text="Registrar Denuncia"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_note"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,0 +1,118 @@
+<resources>
+    <style name="Widget.Theme.ProjetoZeraDengue" parent="">
+        <item name="android:background">@color/brisa_calmante</item>
+    </style>
+
+<style name="Title">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">@color/vermelho</item>
+    <item name="android:textSize">20dp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="fontStyle">italic</item>
+    <item name="layout_constraintTop_toTopOf">parent</item>
+    <item name="layout_constraintBottom_toBottomOf">parent</item>
+    <item name="layout_constraintStart_toStartOf">parent</item>
+    <item name="layout_constraintEnd_toStartOf">@id/logo</item>
+    <item name="android:layout_margin">10dp</item> </style>
+
+    <style name="Title2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/vermelho</item>
+        <item name="android:textSize">10dp</item>
+        <item name="layout_constraintTop_toBottomOf">@id/title</item>
+        <item name="layout_constraintStart_toStartOf">@id/title</item>
+        <item name="layout_constraintEnd_toEndOf">@id/title</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:paddingStart">5dp</item>
+</style>
+
+
+<style name="ButtonNav" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_margin">10dp</item>
+    <item name="cornerRadius">20dp</item>
+    <item name="strokeWidth">@null</item>
+    <item name="strokeColor">@null</item>
+    <item name="drawableTint">@color/vermelho</item>
+    <item name="android:textColor">@color/vermelho</item>
+    <item name="android:textSize">10dp</item>
+    <item name="rippleColor">@color/luzes_da_cidade</item>
+
+</style>
+
+    <style name="EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorHighlight">@color/american_river</item>
+        <item name="android:textColorLink">@color/american_river</item>
+        <item name="android:textCursorDrawable">@color/american_river</item>
+        <item name="android:background">@null</item>
+        <item name="boxBackgroundMode">filled</item>
+        <item name = "hintEnabled">false</item>
+        <item name = "helperTextEnabled">false</item>
+        <item name = "backgroundTint">@color/luzes_da_cidade</item>
+
+
+    </style>
+
+        <style name="Button1" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:background">@null</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textColor">@color/vermelho</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="rippleColor">@color/fundo</item>
+        <item name="strokeColor">@color/vermelho</item>
+        <item name="cornerRadius">80dp</item>
+
+</style>
+
+    <style name="Button2" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:textColor">@color/vermelho</item>
+        <item name="android:padding">5dp</item>
+        <item name="iconPadding">@dimen/mtrl_btn_text_btn_icon_padding</item>
+        <item name="rippleColor">#61FFFFFF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cornerRadius">80dp</item>
+        <item name="iconTint">@color/vermelho</item>
+
+
+
+
+    </style>
+
+
+
+    <style name="View1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">300dp</item>
+        <item name="android:background">@drawable/view1</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="View2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">250dp</item>
+        <item name="android:background">@drawable/view2</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">10dp</item>
+
+
+
+    </style>
+</resources>
