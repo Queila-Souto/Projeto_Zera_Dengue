@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="@color/fundo"
+
+
+    >
+
+    <View
+        android:id="@+id/Container"
+        style="@style/View1"
+        app:layout_constraintTop_toBottomOf="@id/loading"
+        app:layout_constraintBottom_toBottomOf="@id/newpassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutemail"
+        style="@style/EditText"
+        app:layout_constraintEnd_toEndOf="@id/Container"
+        app:layout_constraintStart_toStartOf="@id/Container"
+        app:layout_constraintTop_toBottomOf="@+id/Container"
+        app:layout_constraintTop_toTopOf="@+id/Container"
+        tools:ignore="MissingClass">
+
+        <EditText
+            android:id="@+id/username"
+            style="@style/EditText"
+            android:backgroundTint="@color/luzes_da_cidade"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:textColorHighlight="@color/american_river"
+            android:textColorLink="@color/american_river"
+
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutsenha"
+        style="@style/EditText"
+        app:layout_constraintEnd_toEndOf="@id/Container"
+        app:layout_constraintStart_toStartOf="@+id/Container"
+        app:layout_constraintTop_toBottomOf="@+id/layoutemail"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/american_river">
+
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/EditText"
+            android:backgroundTint="@color/luzes_da_cidade"
+            android:cursorVisible="true"
+            android:hint="Senha"
+            android:inputType="numberPassword"
+            android:textCursorDrawable="@color/american_river"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/newpassword"
+        style="@style/Button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:paddingEnd="10dp"
+        android:text="Esqueci a Senha"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/layoutsenha"
+        app:layout_constraintStart_toStartOf="@id/layoutsenha"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintBottom_toBottomOf="@id/Container"
+        app:rippleColor="@color/fundo"
+
+        />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminateTint="@color/vermelho"
+        android:indeterminateOnly="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="00dp"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login"
+        style="@style/Button1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/layoutsenha"
+        app:layout_constraintBottom_toBottomOf="@+id/Container"
+        app:layout_constraintEnd_toEndOf="@id/Container"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Entrar"
+
+    />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonRegisterUser"
+        style="@style/Button2"
+        app:icon="@drawable/ic_baseline_add_24"
+        android:text="Sou novo por aqui"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Container" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <ImageView
+        android:id="@+id/cabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:src="@drawable/banner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonRegisterUser"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
