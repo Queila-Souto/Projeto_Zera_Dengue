@@ -1,5 +1,6 @@
 package com.example.projetozeradengue.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.model.Denounces;
+import com.example.projetozeradengue.view.activity.LoginActivity;
+import com.example.projetozeradengue.view.activity.MainActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -166,10 +170,20 @@ public class Denounce extends Fragment implements View.OnClickListener {
 
         if (controllerDenounces.create(denounce)){
             Log.i(AppUtil.TAG, "incluido com sucesso");
+            Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
+            back();
         } else{
             Log.e(AppUtil.TAG, "erro ao incluir");
+            Toast.makeText(getActivity().getBaseContext(), "Erro ao registrar denúncia", Toast.LENGTH_LONG).show();
+
         }
     }
+
+    private void back() {
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new Denounce() ).commit();
+    }
+
 
     private void backMainFragment() {
     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();

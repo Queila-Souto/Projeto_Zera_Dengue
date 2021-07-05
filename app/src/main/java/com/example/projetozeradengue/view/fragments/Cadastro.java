@@ -51,12 +51,10 @@ public class Cadastro extends Fragment {
         m_dob = getActivity().findViewById(R.id.ed_date);
         m_email = getActivity().findViewById(R.id.ed_email);
         m_password = getActivity().findViewById(R.id.ed_password);
-        Log.d(AppUtil.TAG, "Cadastro: Elementos atribuídos com sucesso");
         name = m_name.toString();
         dob = m_dob.toString();
         email = m_email.toString();
         password = m_password.toString();
-        Log.d(AppUtil.TAG, "Cadastro: Dados convertidos para string");
 
 
 

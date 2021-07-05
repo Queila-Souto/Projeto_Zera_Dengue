@@ -104,7 +104,6 @@ public class Footer extends Fragment implements View.OnClickListener {
         }
 
     private void SaveUserDataBase() {
-        Log.d(AppUtil.TAG, "FOOTER: Salvando dados... convertendo para string");
 
         String name = mname.getText().toString();
         String bod = mbod.getText().toString();
