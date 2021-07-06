@@ -5,12 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
+import com.example.projetozeradengue.controller.ControllerUser;
+import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 
 /**
@@ -19,7 +24,7 @@ import com.google.android.material.button.MaterialButton;
  * create an instance of this fragment.
  */
 public class Profile extends Fragment {
-
+    private User user ;
     private MaterialButton btn_back;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -99,6 +104,21 @@ public class Profile extends Fragment {
     }
     private void backMainFragment() {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
+    }
+
+    private void update_User(){
+        ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
+        user.setId(4);
+        user.setEmail("email alterado");
+
+        if (controllerUser.update(user)){
+            Toast.makeText(getActivity().getBaseContext(),"Usuario "+user.getNameUser()+" alterado com sucesso....",Toast.LENGTH_LONG).show();
+            Log.i(AppUtil.TAG, "Dado alterado");
+        } else {
+            Toast.makeText(getActivity().getBaseContext(),"Usuario "+user.getNameUser()+" nao foi possivel alterar....",Toast.LENGTH_LONG).show();
+
+            Log.e(AppUtil.TAG, "Não foi possível alterar");
+        }
     }
 
 }

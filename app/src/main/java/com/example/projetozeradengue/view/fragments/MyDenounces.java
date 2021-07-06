@@ -29,7 +29,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * create an instance of this fragment.
  */
 public class MyDenounces extends Fragment implements View.OnClickListener {
-
+    ControllerDenounces controllerDenounces;
     Denounces denounce = new Denounces();
     User user = new User();
 
@@ -184,4 +184,25 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    private void update_Denounce() {
+        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
+
+        denounce.setId(1);
+        denounce.setA_city("cidade alterada");
+
+
+        if (controllerDenounces.update(denounce)){
+            Log.i(AppUtil.TAG, "atualizado com sucesso");
+            Toast.makeText(getActivity().getBaseContext(), "Denuncia atualizada com sucesso", Toast.LENGTH_LONG).show();
+
+        } else{
+            Log.e(AppUtil.TAG, "erro ao alterar denuncia");
+            Toast.makeText(getActivity().getBaseContext(), "Erro ao alterar denúncia", Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+
 }

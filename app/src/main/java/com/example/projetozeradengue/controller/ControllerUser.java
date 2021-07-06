@@ -50,7 +50,12 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         //Lembrando sempre de respeitar o primary Key (ID)
         contentValues = new ContentValues();
         contentValues.put(UserDataModel.ID, obj.getId());
-        return true;
+        contentValues.put(UserDataModel.NOME, obj.getNameUser());
+        contentValues.put(UserDataModel.EMAIL, obj.getEmail());
+        contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
+        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
+
+        return update(UserDataModel.TABLE, contentValues);
 
     }
 
@@ -60,10 +65,9 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         //Lembrando sempre de respeitar o primary Key (id)
 
         return deleteById(UserDataModel.TABLE, id);
-
-
-
-
-
     }
+
+
+
+
 }
