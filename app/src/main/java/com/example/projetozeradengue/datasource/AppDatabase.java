@@ -61,15 +61,7 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
-    public boolean delete(){
-        boolean retorno = false;
-        db = getWritableDatabase();
-
-        return retorno;
-    }
-
     public boolean deleteById(String TableName, int id){
-        //implementar regra de negócio
         boolean retorno = false;
         db = getWritableDatabase();
 
@@ -80,6 +72,20 @@ public class AppDatabase extends SQLiteOpenHelper {
         }
 
         return false;
+    }
+
+    public boolean update(String TableName, ContentValues values){
+        //implementar regra de negócio
+        boolean retorno = false;
+        db = getWritableDatabase();
+
+        try {
+            retorno = db.update(TableName, values, "id=?", new String[]{String.valueOf(values.get("id"))})>0;
+        } catch (Exception e){
+            Log.d(TAG, "Excessão ao inserir dados. "+e.getMessage());
+        }
+
+        return retorno;
     }
 
 
