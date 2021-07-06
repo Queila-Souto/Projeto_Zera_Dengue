@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="420dp"
+    android:background="@color/fundo"
+    tools:context=".view.fragments.Cadastro">
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        style="@style/View2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditText"
+            android:id="@+id/layoutname"
+            android:hint="NOME"
+            app:layout_constraintBottom_toTopOf="@id/layoutdn"
+            app:layout_constraintEnd_toEndOf="@id/layoutemail"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/container"
+            app:helperText="Nome completo*"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_name"
+                style="@style/EditText"
+                android:hint="Nome Completo"
+                android:inputType="textAutoComplete"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutdn"
+            style="@style/EditText"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintStart_toEndOf="@id/layoutname"
+            app:layout_constraintBottom_toTopOf="@id/layoutemail"
+            app:layout_constraintTop_toBottomOf="@id/layoutname"
+            app:helperText="Data de Nascimento*"
+            app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
+            app:errorEnabled="true"
+
+
+
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/ed_date"
+                style="@style/EditText"
+                android:inputType="date"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="true"
+                android:hint="Data de Nascimento"
+
+
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutemail"
+            style="@style/EditText"
+            app:helperText="E-mail*"
+            app:layout_constraintBottom_toTopOf="@id/layoutsenha"
+            app:layout_constraintStart_toEndOf="@id/layoutname"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/layoutdn"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_email"
+                style="@style/EditText"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutsenha"
+            style="@style/EditText"
+            app:layout_constraintTop_toBottomOf="@+id/layoutemail"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/american_river"
+            app:helperText="Digite uma senha numérica de até 8 caracteres*"
+
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_password"
+                style="@style/EditText"
+                android:hint="Senha"
+                android:inputType="numberPassword"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="364dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="-8dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+</FrameLayout>

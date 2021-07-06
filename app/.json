@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "471628855213",
+    "project_id": "projetozeradengue",
+    "storage_bucket": "projetozeradengue.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471628855213:android:377b80ab41b1500e6e1324",
+        "android_client_info": {
+          "package_name": "com.example.projetozeradengue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471628855213-n6tdkenubi2drcjsaet9dimg35h3uqgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXgrN0SqK98ND15zTWzWqunYZ5qq00CbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471628855213-n6tdkenubi2drcjsaet9dimg35h3uqgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
