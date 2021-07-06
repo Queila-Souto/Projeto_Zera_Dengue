@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.datamodel.UserDataModel;
+import com.example.projetozeradengue.model.User;
+
+import java.util.List;
 
 import static com.example.projetozeradengue.core.AppUtil.TAG;
 
@@ -88,7 +91,9 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
+    public List<User> showUser (){
 
+    }
 
 
 
