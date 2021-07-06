@@ -2,7 +2,6 @@ package com.example.projetozeradengue.controller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.example.projetozeradengue.core.AppUtil;
@@ -56,12 +55,11 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
     }
 
     @Override
-    public boolean delete(User obj) {
+    public boolean delete(int id) {
         //Método DELETE do SQL: DELETE FROM TABELA WHERE ID = xxx
         //Lembrando sempre de respeitar o primary Key (id)
-        contentValues = new ContentValues();
-        contentValues.put(UserDataModel.ID, obj.getId());
-        return true;
+
+        return deleteById(UserDataModel.TABLE, id);
 
 
 

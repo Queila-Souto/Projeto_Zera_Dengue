@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
+import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.datasource.AppDatabase;
 import com.example.projetozeradengue.model.Denounces;
 
@@ -52,7 +51,7 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
     }
 
     @Override
-    public boolean delete(Denounces obj) {
-        return false;
+    public boolean delete(int id) {
+        return deleteById(DenouncesDataModel.TABLE, id);
     }
 }

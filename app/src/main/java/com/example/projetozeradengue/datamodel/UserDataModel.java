@@ -21,7 +21,7 @@ public class UserDataModel {
     public static final String TABLE = "Usuarios";
 
     //PASSO 2 - ATRIBUINDO OS CAMPOS(COLUNAS)
-    public static final String ID = "codigo";
+    public static final String ID = "id";
     public static final String NOME = "nome";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "senha";

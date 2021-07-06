@@ -6,7 +6,7 @@ public interface ICrud<T> {
     public boolean create(T obj);
     public List<T> retrieve();
     public boolean update(T obj);
-    public boolean delete(T obj);
+    public boolean delete(int id);
 
 }
 /*A interface contem metodos que serão obrigatóriamente implementados

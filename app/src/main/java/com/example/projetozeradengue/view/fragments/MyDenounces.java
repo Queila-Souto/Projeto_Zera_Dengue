@@ -1,22 +1,40 @@
 package com.example.projetozeradengue.view.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
+import com.example.projetozeradengue.controller.ControllerDenounces;
+import com.example.projetozeradengue.controller.ControllerUser;
+import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.datamodel.UserDataModel;
+import com.example.projetozeradengue.model.Denounces;
+import com.example.projetozeradengue.model.User;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MyDenounces#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyDenounces extends Fragment {
+public class MyDenounces extends Fragment implements View.OnClickListener {
+
+    Denounces denounce = new Denounces();
+    User user = new User();
+
+    MaterialButton m_btnBack, m_btn_DeleteUser, m_btn_DeleteDen;
+   TextInputEditText m_insertUserId , m_insertDenId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +76,19 @@ public class MyDenounces extends Fragment {
         }
     }
 
+
+
+    @Override
+    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        startingComponents();
+        m_btn_DeleteUser.setOnClickListener(this);
+        m_btn_DeleteDen.setOnClickListener(this);
+        m_btnBack.setOnClickListener(this);
+    }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,5 +113,75 @@ public class MyDenounces extends Fragment {
     public void title2(String title2){
         TextView mtitle2 = getActivity().findViewById(R.id.title2);
         mtitle2.setText(title2);
+    }
+
+    private void startingComponents() {
+        m_btnBack = getActivity().findViewById(R.id.btn_back);
+        m_btn_DeleteUser = getActivity().findViewById(R.id.btn_deleteUser);
+        m_btn_DeleteDen = getActivity().findViewById(R.id.btn_deleteDen);
+        m_insertDenId = getActivity().findViewById(R.id.et_insertDenId);
+        m_insertUserId = getActivity().findViewById(R.id.et_insertUserId);
+
+    }
+
+    private void back() {
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new MainFragment() ).commit();
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_back:
+                    back();
+                    break;
+                case R.id.btn_deleteUser:
+                    delete_User();
+                    break;
+                case R.id.btn_deleteDen:
+                    delete_denounce();
+                    break;
+            }
+        }
+
+    private void delete_denounce() {
+        ControllerDenounces controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
+        int denounceId = Integer.parseInt(m_insertDenId.getText().toString().trim());
+
+        denounce.setId(denounceId);
+
+        if (controllerDenounces.delete(denounce.getId())){
+            Log.i(AppUtil.TAG, "excluido com sucesso");
+            Toast.makeText(getActivity().getBaseContext(), "Denuncia excluida com sucesso", Toast.LENGTH_LONG).show();
+            back();
+        } else{
+            Log.e(AppUtil.TAG, "erro ao excluir");
+            Toast.makeText(getActivity().getBaseContext(), "Erro ao excluir denúncia", Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+    private void delete_User() {
+        ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
+        int userId = Integer.parseInt(m_insertUserId.getText().toString().trim());
+
+        user.setId(userId);
+
+        if (controllerUser.delete(user.getId())){
+            Log.i(AppUtil.TAG, "excluido com sucesso");
+            Toast.makeText(getActivity().getBaseContext(), "Usuário excluida com sucesso", Toast.LENGTH_LONG).show();
+            back();
+        } else{
+            Log.e(AppUtil.TAG, "erro ao excluir");
+            Toast.makeText(getActivity().getBaseContext(), "Erro ao excluir denúncia", Toast.LENGTH_LONG).show();
+
+        }
+
     }
 }

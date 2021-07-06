@@ -68,4 +68,22 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
+    public boolean deleteById(String TableName, int id){
+        //implementar regra de negócio
+        boolean retorno = false;
+        db = getWritableDatabase();
+
+        try {
+            retorno = db.delete(TableName, "id = ?", new String[]{String.valueOf(id)})>0;
+        } catch (Exception e){
+            Log.d(TAG, "Excessão ao deletar dados. "+e.getMessage());
+        }
+
+        return false;
+    }
+
+
+
+
+
 }

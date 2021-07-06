@@ -22,7 +22,7 @@ public class DenouncesDataModel {
     public static final String REFERENCES_Column= UserDataModel.ID;
 
     //PASSO 2 - ATRIBUINDO OS CAMPOS(COLUNAS)
-    public static final String ID = "codigo_denuncia";
+    public static final String ID = "id";
     public static final String USER_ID = "cod_usuario";
     public static final String FOREIGN_KEY="fk_userid";
     public static final String STREET = "rua";
