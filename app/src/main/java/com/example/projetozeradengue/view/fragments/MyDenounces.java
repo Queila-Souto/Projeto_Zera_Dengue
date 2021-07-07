@@ -1,11 +1,9 @@
 package com.example.projetozeradengue.view.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +16,12 @@ import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -149,8 +145,8 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     delete_User();
                     break;
                 case R.id.btn_deleteDen:
-                    //delete_denounce();
-                    user_Show();
+                    delete_denounce();
+
                     break;
             }
         }
@@ -210,11 +206,11 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
     }
 
-    private void user_Show() {
+    private void denounces_Show() {
 
-        controllerUser = new ControllerUser(getActivity().getBaseContext());
-        for (User user: controllerUser.showUser(UserDataModel.TABLE)) {
-            Log.i("Dados Usuarios" , " "+user.getId()+" "+user.getNameUser()+" "+user.getDob()+" "+user.getEmail());
+        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
+        for (Denounces den: controllerDenounces.showDenounce(DenouncesDataModel.TABLE)) {
+            Log.i("Dados Denúncia" , " "+den.getId()+" "+den.getUserId()+" "+den.getCep()+" "+den.getA_Street()+" "+den.getA_number()+" "+den.getA_complement()+" "+den.getA_district()+" "+den.getA_city()+" "+den.getA_state()+" "+den.getNote());
         }
     }
 
