@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 
@@ -25,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
  */
 public class Profile extends Fragment {
     private User user ;
+    private ControllerUser controllerUser ;
     private MaterialButton btn_back;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -107,7 +109,7 @@ public class Profile extends Fragment {
     }
 
     private void update_User(){
-        ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
+        controllerUser = new ControllerUser(getActivity().getBaseContext());
         user.setId(4);
         user.setEmail("email alterado");
 
@@ -121,4 +123,11 @@ public class Profile extends Fragment {
         }
     }
 
+    private void user_Show() {
+
+        controllerUser = new ControllerUser(getActivity().getBaseContext());
+        for (User user : controllerUser.showUser(UserDataModel.TABLE)) {
+            Log.i("Dados Usuarios", " " + user.getId() + " " + user.getNameUser() + " " + user.getDob() + " " + user.getEmail());
+        }
+    }
 }

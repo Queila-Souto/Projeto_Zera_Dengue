@@ -40,9 +40,7 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
     @Override
     public List<Denounces> retrieve() {
 
-
-
-        return null;
+        return showDenounce(DenouncesDataModel.TABLE);
     }
 
     @Override

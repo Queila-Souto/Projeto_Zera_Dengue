@@ -1,6 +1,5 @@
 package com.example.projetozeradengue.view.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,6 +16,7 @@ import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class MyDenounces extends Fragment implements View.OnClickListener {
     ControllerDenounces controllerDenounces;
+    ControllerUser controllerUser;
     Denounces denounce = new Denounces();
     User user = new User();
 
@@ -145,6 +146,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     break;
                 case R.id.btn_deleteDen:
                     delete_denounce();
+
                     break;
             }
         }
@@ -204,5 +206,14 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
     }
 
+    private void denounces_Show() {
+
+        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
+        for (Denounces den: controllerDenounces.showDenounce(DenouncesDataModel.TABLE)) {
+            Log.i("Dados Denúncia" , " "+den.getId()+" "+den.getUserId()+" "+den.getCep()+" "+den.getA_Street()+" "+den.getA_number()+" "+den.getA_complement()+" "+den.getA_district()+" "+den.getA_city()+" "+den.getA_state()+" "+den.getNote());
+        }
+    }
+
 
 }
+
