@@ -24,6 +24,9 @@ import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MyDenounces#newInstance} factory method to
@@ -208,18 +211,13 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     }
 
     private void user_Show() {
+
         controllerUser = new ControllerUser(getActivity().getBaseContext());
-        TextView lista_usuarios = getActivity().findViewById(R.id.tv_listDen);
-        lista_usuarios.setText(dadosUsuario());
-
-
-    }
-    public String dadosUsuario(){
-        String dados = "";
         for (User user: controllerUser.showUser(UserDataModel.TABLE)) {
             Log.i("Dados Usuarios" , " "+user.getId()+" "+user.getNameUser()+" "+user.getDob()+" "+user.getEmail());
-            dados = " "+user.getId()+" "+user.getNameUser()+" "+user.getDob()+" "+user.getEmail()  ;
         }
-        return dados;}
+    }
+
 
 }
+
