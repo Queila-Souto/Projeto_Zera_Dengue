@@ -2,6 +2,7 @@ package com.example.projetozeradengue.datasource;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.projetozeradengue.core.AppUtil.TAG;
@@ -74,7 +76,7 @@ public class AppDatabase extends SQLiteOpenHelper {
             Log.d(TAG, "Excessão ao deletar dados. "+e.getMessage());
         }
 
-        return false;
+        return retorno;
     }
 
     public boolean update(String TableName, ContentValues values){
@@ -91,8 +93,26 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
-    public List<User> showUser (){
+    public List<User> showUser (String nameTable){
+    db = getReadableDatabase();
+    List<User> userList = new ArrayList<>();
+    String sql = "SELECT * FROM " + nameTable;
+        Cursor cursor;
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            do {
+                User user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndex(UserDataModel.ID)));
+                user.setNameUser(cursor.getString(cursor.getColumnIndex(UserDataModel.NOME)));
+                user.setEmail(cursor.getString(cursor.getColumnIndex(UserDataModel.EMAIL)));
+                user.setDob(cursor.getString(cursor.getColumnIndex(UserDataModel.DATEOFBORN)));
+                userList.add(user);
 
+            } while (cursor.moveToNext());
+
+        }
+
+        return userList;
     }
 
 

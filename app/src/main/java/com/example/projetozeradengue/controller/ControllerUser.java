@@ -40,8 +40,7 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
 
     @Override
     public List<User> retrieve() {
-        List<User> lista = new ArrayList<>();
-    return lista;
+    return showUser(UserDataModel.TABLE);
     }
 
     @Override

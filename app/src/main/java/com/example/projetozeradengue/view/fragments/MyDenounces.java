@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class MyDenounces extends Fragment implements View.OnClickListener {
     ControllerDenounces controllerDenounces;
+    ControllerUser controllerUser;
     Denounces denounce = new Denounces();
     User user = new User();
 
@@ -144,7 +146,8 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     delete_User();
                     break;
                 case R.id.btn_deleteDen:
-                    delete_denounce();
+                    //delete_denounce();
+                    user_Show();
                     break;
             }
         }
@@ -204,5 +207,19 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
     }
 
+    private void user_Show() {
+        controllerUser = new ControllerUser(getActivity().getBaseContext());
+        TextView lista_usuarios = getActivity().findViewById(R.id.tv_listDen);
+        lista_usuarios.setText(dadosUsuario());
+
+
+    }
+    public String dadosUsuario(){
+        String dados = "";
+        for (User user: controllerUser.showUser(UserDataModel.TABLE)) {
+            Log.i("Dados Usuarios" , " "+user.getId()+" "+user.getNameUser()+" "+user.getDob()+" "+user.getEmail());
+            dados = " "+user.getId()+" "+user.getNameUser()+" "+user.getDob()+" "+user.getEmail()  ;
+        }
+        return dados;}
 
 }
