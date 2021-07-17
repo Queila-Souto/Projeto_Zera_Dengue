@@ -1,11 +1,12 @@
-package thiagocury.eti.br.exconsumindoviacepretrofit2.service;
+package com.example.projetozeradengue.retrofit_APIS.service;
+
+import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import thiagocury.eti.br.exconsumindoviacepretrofit2.model.CEP;
 
 /**
  * Created by thiagocury on 21/11/17.

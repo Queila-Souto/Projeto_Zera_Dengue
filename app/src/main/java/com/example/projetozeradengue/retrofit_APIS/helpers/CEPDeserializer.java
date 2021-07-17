@@ -1,5 +1,6 @@
-package thiagocury.eti.br.exconsumindoviacepretrofit2.helpers;
+package com.example.projetozeradengue.retrofit_APIS.helpers;
 
+import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -8,7 +9,6 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-import thiagocury.eti.br.exconsumindoviacepretrofit2.model.CEP;
 
 /**
  * Created by thiagocury on 21/11/17.

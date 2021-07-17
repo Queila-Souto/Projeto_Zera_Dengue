@@ -1,9 +1,12 @@
-package thiagocury.eti.br.exconsumindoviacepretrofit2.service;
+package com.example.projetozeradengue.retrofit_APIS.service;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.projetozeradengue.retrofit_APIS.helpers.CEPDeserializer;
+import com.example.projetozeradengue.retrofit_APIS.model.CEP;
+import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,10 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import thiagocury.eti.br.exconsumindoviacepretrofit2.R;
-import thiagocury.eti.br.exconsumindoviacepretrofit2.helpers.CEPDeserializer;
-import thiagocury.eti.br.exconsumindoviacepretrofit2.model.CEP;
-import thiagocury.eti.br.exconsumindoviacepretrofit2.model.SimpleCallback;
+
 
 public class CEPService {
 

@@ -1,6 +1,5 @@
 package com.example.projetozeradengue.view.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,13 +15,12 @@ import android.widget.Toast;
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
-import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.model.Denounces;
-import com.example.projetozeradengue.view.activity.LoginActivity;
-import com.example.projetozeradengue.view.activity.MainActivity;
+import com.example.projetozeradengue.retrofit_APIS.model.CEP;
+import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
+import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,10 +29,10 @@ import com.google.android.material.textfield.TextInputLayout;
  */
 public class Denounce extends Fragment implements View.OnClickListener {
 
-     MaterialButton m_btn_back, m_btn_register_loc, m_btn_map;
-     TextInputEditText m_street, m_number, m_district, m_complement, m_city, m_state, m_note,m_cep;
-     ControllerDenounces controllerDenounces;
-     Denounces denounce;
+    MaterialButton m_btn_back, m_btn_register_loc, m_btn_cep, m_btn_map;
+    TextInputEditText m_street, m_number, m_district, m_complement, m_city, m_state, m_note, m_cep;
+    ControllerDenounces controllerDenounces;
+    Denounces denounce;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -72,8 +70,9 @@ public class Denounce extends Fragment implements View.OnClickListener {
         startingComponents();
         m_btn_back.setOnClickListener(this);
         m_btn_map.setOnClickListener(this);
+        m_btn_cep.setOnClickListener(this);
         m_btn_register_loc.setOnClickListener(this);
-            }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,27 +95,27 @@ public class Denounce extends Fragment implements View.OnClickListener {
         mtitle.setText(title);
     }
 
-    public void title2(String title2){
+    public void title2(String title2) {
         TextView mtitle2 = getActivity().findViewById(R.id.title2);
         mtitle2.setText(title2);
     }
-    public void startingComponents(){
+
+    public void startingComponents() {
         //BOTOES
-       m_btn_back = getActivity().findViewById(R.id.btn_back);
-       m_btn_register_loc = getActivity().findViewById(R.id.btn_register_loc);
-       m_btn_map = getActivity().findViewById(R.id.btn_map);
+        m_btn_back = getActivity().findViewById(R.id.btn_back);
+        m_btn_register_loc = getActivity().findViewById(R.id.btn_register_loc);
+        m_btn_map = getActivity().findViewById(R.id.btn_map);
+        m_btn_cep = getActivity().findViewById(R.id.btn_cep);
 
-       //EDIT TEXTS
-       m_cep = getActivity().findViewById(R.id.et_cep);
-       m_street = getActivity().findViewById(R.id.et_street);
-       m_number = getActivity().findViewById(R.id.et_number);
-       m_district = getActivity().findViewById(R.id.et_district);
-       m_complement = getActivity().findViewById(R.id.et_complement);
-       m_city = getActivity().findViewById(R.id.et_city);
-       m_state = getActivity().findViewById(R.id.et_state);
-       m_note = getActivity().findViewById(R.id.et_note);
-
-
+        //EDIT TEXTS
+        m_cep = getActivity().findViewById(R.id.et_cep);
+        m_street = getActivity().findViewById(R.id.et_street);
+        m_number = getActivity().findViewById(R.id.et_number);
+        m_district = getActivity().findViewById(R.id.et_district);
+        m_complement = getActivity().findViewById(R.id.et_complement);
+        m_city = getActivity().findViewById(R.id.et_city);
+        m_state = getActivity().findViewById(R.id.et_state);
+        m_note = getActivity().findViewById(R.id.et_note);
 
 
     }
@@ -124,55 +123,89 @@ public class Denounce extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_back:
                 backMainFragment();
                 break;
+            case R.id.btn_cep:
+                searchforCep();
+                break;
             case R.id.btn_register_loc:
-                registerDen();
+                searchforCep();
                 break;
             case R.id.btn_map:
-                 break;
+                break;
         }
     }
 
-    private void map() {
-        //SegundoPlano tarefa = new SegundoPlano();
-       // tarefa.execute("https://viacep.com.br/ws/01001000/json/");
+    private void searchforCep() {
+        String cep_text = m_cep.getText().toString();
+
+        if (!cep_text.isEmpty()) {
+            CEPService service = new CEPService(getContext());
+            service.getCEP(cep_text, new SimpleCallback<CEP>() {
+                @Override
+                public void onResponse(CEP response) {
+                    CEP cep = response;
+                    m_street.setText(cep.getLogradouro());
+                    m_district.setText(cep.getBairro());
+                    m_city.setText(cep.getLocalidade());
+                    m_complement.setText(cep.getComplemento());
+                    m_state.setText(cep.getUf());
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(
+                            getContext(),
+                            "Erro ao localizar cep",
+                            Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+        } else {
+            Toast.makeText(
+                    getContext(),
+                    "CEP vazio!",
+                    Toast.LENGTH_LONG).show();
+
+        }
     }
 
+
     private void registerDen() {
-    Log.d(AppUtil.TAG, "DENOUNCE: Estanciando objetos controller e model denuncia");
-    controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
-    denounce = new Denounces();
+        Log.d(AppUtil.TAG, "DENOUNCE: Estanciando objetos controller e model denuncia");
+        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
+        denounce = new Denounces();
 
-    Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia... convertendo para string e int");
-    int cep = Integer.parseInt(m_cep.getText().toString().trim());
-    String street = m_street.getText().toString();
-    String number = m_number.getText().toString();
-    String district = m_district.getText().toString();
-    String complement = m_complement.getText().toString();
-    String city = m_city.getText().toString();
-    String state = m_state.getText().toString();
-    String note = m_note.getText().toString();
+        Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia... convertendo para string e int");
+        int cep = Integer.parseInt(m_cep.getText().toString().trim());
+        String street = m_street.getText().toString();
+        String number = m_number.getText().toString();
+        String district = m_district.getText().toString();
+        String complement = m_complement.getText().toString();
+        String city = m_city.getText().toString();
+        String state = m_state.getText().toString();
+        String note = m_note.getText().toString();
 
-    denounce.setUserId(null);
-    denounce.setCep(cep);
-    denounce.setA_Street(street);
-    denounce.setA_number(number);
-    denounce.setA_complement(complement);
-    denounce.setA_district(district);
-   denounce.setA_city(city);
-   denounce.setA_state(state);
-    denounce.setNote(note);
+        denounce.setUserId(null);
+        denounce.setCep(cep);
+        denounce.setA_Street(street);
+        denounce.setA_number(number);
+        denounce.setA_complement(complement);
+        denounce.setA_district(district);
+        denounce.setA_city(city);
+        denounce.setA_state(state);
+        denounce.setNote(note);
 
-    Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia ");
+        Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia ");
 
-        if (controllerDenounces.create(denounce)){
+        if (controllerDenounces.create(denounce)) {
             Log.i(AppUtil.TAG, "incluido com sucesso");
             Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
             back();
-        } else{
+        } else {
             Log.e(AppUtil.TAG, "erro ao incluir");
             Toast.makeText(getActivity().getBaseContext(), "Erro ao registrar denúncia", Toast.LENGTH_LONG).show();
 
@@ -181,12 +214,12 @@ public class Denounce extends Fragment implements View.OnClickListener {
 
     private void back() {
 
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new Denounce() ).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new Denounce()).commit();
     }
 
 
     private void backMainFragment() {
-    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
     }
 
 
