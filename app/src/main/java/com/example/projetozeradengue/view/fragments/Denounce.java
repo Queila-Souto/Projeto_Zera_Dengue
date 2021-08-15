@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.core.MaskEditUtil;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
@@ -118,7 +120,12 @@ public class Denounce extends Fragment implements View.OnClickListener {
         m_note = getActivity().findViewById(R.id.et_note);
 
 
+        //masks
+        m_cep.addTextChangedListener(MaskEditUtil.mask(m_cep,MaskEditUtil.FORMAT_CEP));
+
+
     }
+
 
 
     @Override
