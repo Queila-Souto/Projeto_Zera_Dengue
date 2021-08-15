@@ -20,13 +20,14 @@
             android:layout_margin="0dp"
             android:padding="0dp"
             >
+
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/EditText"
                 android:id="@+id/et_cep"
-                android:hint="Digite o Cep"
-                android:inputType="number"
+                style="@style/EditText"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="Digite o Cep"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -165,29 +166,16 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cep"
-            style="@style/Button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Preencher"
-            android:textSize="8dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toEndOf="@id/til_cep"
-            app:layout_constraintTop_toTopOf="@id/til_cep"
-            />
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_map"
             style="@style/Button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mapa"
-            android:textSize="8dp"
+            android:layout_width="40dp"
+            android:layout_height="45dp"
             android:layout_marginTop="4dp"
+            android:textSize="8dp"
             app:icon="@drawable/ic_baseline_add_location_alt_24"
             app:iconTint="@color/vermelho"
-            app:layout_constraintStart_toEndOf="@id/btn_cep"
-            app:layout_constraintTop_toTopOf="@id/til_cep"
-            >
+            app:layout_constraintStart_toEndOf="@+id/til_cep"
+            app:layout_constraintTop_toTopOf="@id/til_cep">
 
         </com.google.android.material.button.MaterialButton>
 
