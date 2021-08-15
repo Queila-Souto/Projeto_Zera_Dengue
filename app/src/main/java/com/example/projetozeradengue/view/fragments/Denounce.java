@@ -5,16 +5,20 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.core.MaskEditUtil;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
@@ -30,7 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class Denounce extends Fragment implements View.OnClickListener {
 
-    MaterialButton m_btn_back, m_btn_register_loc, m_btn_cep, m_btn_map;
+    MaterialButton m_btn_back, m_btn_register_loc, m_btn_map;
     TextInputEditText m_street, m_number, m_district, m_complement, m_city, m_state, m_note, m_cep;
     ControllerDenounces controllerDenounces;
     Denounces denounce;
@@ -71,7 +75,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
         startingComponents();
         m_btn_back.setOnClickListener(this);
         m_btn_map.setOnClickListener(this);
-        m_btn_cep.setOnClickListener(this);
         m_btn_register_loc.setOnClickListener(this);
     }
 
@@ -106,7 +109,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
         m_btn_back = getActivity().findViewById(R.id.btn_back);
         m_btn_register_loc = getActivity().findViewById(R.id.btn_register_loc);
         m_btn_map = getActivity().findViewById(R.id.btn_map);
-        m_btn_cep = getActivity().findViewById(R.id.btn_cep);
 
         //EDIT TEXTS
         m_cep = getActivity().findViewById(R.id.et_cep);
@@ -119,7 +121,31 @@ public class Denounce extends Fragment implements View.OnClickListener {
         m_note = getActivity().findViewById(R.id.et_note);
 
 
+        //masks
+        m_cep.addTextChangedListener(MaskEditUtil.mask(m_cep,MaskEditUtil.FORMAT_CEP));
+        m_cep.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+              searchforCep();
+            }
+        });
+
+
     }
+
 
 
     @Override
@@ -127,9 +153,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_back:
                 backMainFragment();
-                break;
-            case R.id.btn_cep:
-                searchforCep();
                 break;
             case R.id.btn_register_loc:
                 searchforCep();
