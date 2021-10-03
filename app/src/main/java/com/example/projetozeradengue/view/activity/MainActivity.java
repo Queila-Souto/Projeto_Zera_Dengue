@@ -3,6 +3,7 @@ package com.example.projetozeradengue.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.view.fragments.Header;
@@ -16,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout1,new Header()).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new MainFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout1, new Header()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
+
 
     }
 

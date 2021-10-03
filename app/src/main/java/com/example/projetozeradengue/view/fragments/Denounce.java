@@ -1,11 +1,9 @@
 package com.example.projetozeradengue.view.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +22,6 @@ import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
-import com.example.projetozeradengue.view.activity.MainActivity;
-import com.example.projetozeradengue.view.activity.MainActivity2;
-import com.example.projetozeradengue.view.fragments.MainFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -162,7 +156,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
                 searchforCep();
                 break;
             case R.id.btn_map:
-                gotoActivity(MainActivity2.class);
+                gotoMapsFragment();
                 break;
         }
     }
@@ -252,10 +246,12 @@ public class Denounce extends Fragment implements View.OnClickListener {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
     }
 
-    public void gotoActivity(Class go) {
-        FragmentActivity act = getActivity();
-        Intent intent = new Intent(act,go);
-        startActivity(intent);
+    public void gotoMapsFragment() {
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout2, new MapsFragment())
+                .addToBackStack(Denounce.class.getName()).commit();
+
     }
 
 }
