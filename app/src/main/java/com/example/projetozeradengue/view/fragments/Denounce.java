@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,6 @@ import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
-import com.example.projetozeradengue.view.fragments.MainFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -158,9 +156,11 @@ public class Denounce extends Fragment implements View.OnClickListener {
                 searchforCep();
                 break;
             case R.id.btn_map:
+                gotoMapsFragment();
                 break;
         }
     }
+
 
     private void searchforCep() {
         String cep_text = m_cep.getText().toString();
@@ -246,6 +246,13 @@ public class Denounce extends Fragment implements View.OnClickListener {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
     }
 
+    public void gotoMapsFragment() {
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout2, new MapsFragment())
+                .addToBackStack(Denounce.class.getName()).commit();
+
+    }
 
 }
 
