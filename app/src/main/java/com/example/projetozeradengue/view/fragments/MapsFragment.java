@@ -222,8 +222,8 @@ public class MapsFragment extends Fragment {
 
         //Determina o ciclo em que será requisitado a localização, otimizando o uso da bateria
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(15 * 1000);
-        locationRequest.setFastestInterval(5 * 1000);
+//        locationRequest.setInterval(15 * 1000);
+//        locationRequest.setFastestInterval(5 * 1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
 
@@ -241,10 +241,8 @@ public class MapsFragment extends Fragment {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
 
-                        LatLng lastKnownLocation = new LatLng(latitude, longitude);
-                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(lastKnownLocation, 10);
-                        gmap.addMarker(new MarkerOptions().position(lastKnownLocation).title("Estou aqui"));
-                        gmap.animateCamera(cameraUpdate);
+
+
 
 
                         if (!Geocoder.isPresent()) {
@@ -291,8 +289,17 @@ public class MapsFragment extends Fragment {
             final String addressOutput = resultData.getString(AppUtil.RESULT_DATA_KEY);
 
             if (addressOutput != null) {
-            getActivity().runOnUiThread(() ->  Toast.makeText(getActivity().getBaseContext(),
-                    addressOutput, Toast.LENGTH_LONG).show());
+                String cepMap = addressOutput.replace("[","")
+                        .replace("]","")
+                        .replace("-","");
+
+
+                LatLng lastKnownLocation = new LatLng(latitude, longitude);
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(lastKnownLocation, 10);
+                getActivity().runOnUiThread(() -> gmap.addMarker(new MarkerOptions().position(lastKnownLocation).title("Estou aqui").snippet(cepMap)));
+                getActivity().runOnUiThread(() -> gmap.animateCamera(cameraUpdate));
+//            getActivity().runOnUiThread(() ->  Toast.makeText(getActivity().getBaseContext(),
+//                    addressOutput, Toast.LENGTH_LONG).show());
             Log.i("teste", "Endereço capturado: " + addressOutput);
 
             }
