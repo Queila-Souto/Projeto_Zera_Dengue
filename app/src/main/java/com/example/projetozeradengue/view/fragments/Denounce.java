@@ -153,7 +153,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
                 backMainFragment();
                 break;
             case R.id.btn_register_loc:
-                searchforCep();
+                registerDen();
                 break;
             case R.id.btn_map:
                 gotoMapsFragment();
@@ -203,8 +203,8 @@ public class Denounce extends Fragment implements View.OnClickListener {
         controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
         denounce = new Denounces();
 
-        Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia... convertendo para string e int");
-        int cep = Integer.parseInt(m_cep.getText().toString().trim());
+        Log.d(AppUtil.TAG, "DENOUNCE: convertendo");
+        String cep = m_cep.getText().toString().replace("-","");
         String street = m_street.getText().toString();
         String number = m_number.getText().toString();
         String district = m_district.getText().toString();
