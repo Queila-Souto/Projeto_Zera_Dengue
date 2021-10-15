@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -45,6 +47,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,6 +64,7 @@ public class MapsFragment extends Fragment {
     boolean gpsAtivo = true;
     LocationManager locationManager;
     GoogleMap gmap;
+    ClipboardManager clipboardManager;
 
     String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -222,13 +226,17 @@ public class MapsFragment extends Fragment {
 
         //Determina o ciclo em que será requisitado a localização, otimizando o uso da bateria
         LocationRequest locationRequest = LocationRequest.create();
-//        locationRequest.setInterval(15 * 1000);
-//        locationRequest.setFastestInterval(5 * 1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
+        // As proximas linhas fazem a checagem de local a cada 15s. Não será utilizada nesse momento, por isso comentei
+        //        locationRequest.setInterval(15 * 1000);
+        //        locationRequest.setFastestInterval(5 * 1000);
 
+        //Implementa o callback que se comunicará com o fusedLocationProviderClient
         LocationCallback locationCallBack = new LocationCallback() {
+
             @Override
+            // pega o location e atribui às variáveis
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult == null) {
                     Log.e("teste", "local is null");
@@ -241,32 +249,38 @@ public class MapsFragment extends Fragment {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
 
-
-
-
-
+                        //só prossegue se o geocoder estiver inativo
                         if (!Geocoder.isPresent()) {
                             return;
                         }
+
+                        //com o geocoder ativo, faz a decodificação do location para uma string de endereço
                         startIntentService(location);
                     }
                 }
             }
 
         };
+
+        //verifica permissões.
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest
                 .permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getContext(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager
                         .PERMISSION_GRANTED) {
-            // TODO
+            // TODO implementar um alertDialog futuramente para que o usuário possa conceder a permissão
         }
+
+        //faz a requisição do Location
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallBack, null);
+
+        //estancia a classe que receberá o endereço decodificado
         resultReceiver = new AddressResultReceiver(null);
 
 
     }
 
+    //prepara a intent que levará as informações para a classe FetchAddressService
     private void startIntentService(Location location) {
         Intent intent = new Intent(getContext(), FetchAddressService.class);
         intent.putExtra(AppUtil.RECEIVER, resultReceiver);
@@ -275,6 +289,7 @@ public class MapsFragment extends Fragment {
 
     }
 
+    //Classe que recebe o resultado do fetchAddressService
     private class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler handler) {
             super(handler);
@@ -286,26 +301,46 @@ public class MapsFragment extends Fragment {
             if (resultData == null) {
                 return;
             }
+
+            //variável que receberá o endereço decodificado
             final String addressOutput = resultData.getString(AppUtil.RESULT_DATA_KEY);
 
             if (addressOutput != null) {
-                String cepMap = addressOutput.replace("[","")
-                        .replace("]","")
-                        .replace("-","");
 
+                //prepara o modelo de string cep
+                String cepMap = addressOutput.replace("[", "")
+                        .replace("]", "")
+                        .replace("-", "");
 
+                //captura a última localização
                 LatLng lastKnownLocation = new LatLng(latitude, longitude);
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(lastKnownLocation, 10);
-                getActivity().runOnUiThread(() -> gmap.addMarker(new MarkerOptions().position(lastKnownLocation).title("Estou aqui").snippet(cepMap)));
+                //Move a camera e aplica o zoom
+                CameraUpdate cameraUpdate = CameraUpdateFactory
+                        .newLatLngZoom(lastKnownLocation, 10);
                 getActivity().runOnUiThread(() -> gmap.animateCamera(cameraUpdate));
-//            getActivity().runOnUiThread(() ->  Toast.makeText(getActivity().getBaseContext(),
-//                    addressOutput, Toast.LENGTH_LONG).show());
-            Log.i("teste", "Endereço capturado: " + addressOutput);
+
+                //adiciona o Mark
+                getActivity().runOnUiThread(() -> gmap.addMarker(new MarkerOptions()
+                        .position(lastKnownLocation).title("Estou aqui").snippet(cepMap)));
+
+                Log.i("teste", "Endereço capturado: " + addressOutput);
+                getActivity().runOnUiThread(() -> gmap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+                        Log.i("teste", "cliquei no info " + addressOutput);
+                        clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText(null,addressOutput);
+                        clipboardManager.setPrimaryClip(clip);
+                        if (clip != null){
+                            Toast.makeText(getActivity(), "CEP copiado com suscesso", Toast.LENGTH_LONG ).show();
+                        }
+
+                    }
+                }));
+
+
 
             }
-
-
-
 
         }
     }

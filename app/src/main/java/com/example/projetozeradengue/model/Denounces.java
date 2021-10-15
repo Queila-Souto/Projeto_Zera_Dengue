@@ -11,11 +11,12 @@ public class Denounces {
     private String a_coord;
     private String note;
     private String a_state;
-    private int id, a_cep;
+    private String a_cep;
+    private int id;
     private Integer userId;
 
   //CONSTRUTOR
-    public Denounces(@Nullable Integer userId, int cep, String street, String number, @Nullable String complement, String district, String city, String state,String note ) {
+    public Denounces(@Nullable Integer userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state,String note ) {
         this.userId = userId;
         this.a_cep = cep;
         this.a_Street = street;
@@ -47,11 +48,11 @@ public class Denounces {
         this.id = id;
     }
 
-    public int getCep() {
+    public String getCep() {
         return a_cep;
     }
 
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.a_cep = cep;
     }
 

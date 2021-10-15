@@ -127,14 +127,13 @@ public class AppDatabase extends SQLiteOpenHelper {
                 Denounces denounce = new Denounces();
                 denounce.setId(cursor.getInt(cursor.getColumnIndex(DenouncesDataModel.ID)));
                 denounce.setUserId(cursor.getInt(cursor.getColumnIndex(DenouncesDataModel.USER_ID)));
-                denounce.setCep(cursor.getInt(cursor.getColumnIndex(DenouncesDataModel.CEP)));
+                denounce.setCep(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.CEP)));
                 denounce.setA_Street(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.STREET)));
                 denounce.setA_number(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.NUMBER)));
                 denounce.setA_complement(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.COMPLEMENT)));
                 denounce.setA_district(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.DISTRICT)));
                 denounce.setA_city(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.CITY)));
                 denounce.setA_state(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.STATE)));
-                denounce.setA_coord(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.COORDINATES)));
                 denounce.setNote(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.NOTES)));
                 denouncesList.add(denounce);
 

@@ -29,7 +29,6 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
         contentValues.put(DenouncesDataModel.DISTRICT, obj.getA_district());
         contentValues.put(DenouncesDataModel.COMPLEMENT, obj.getA_complement());
         contentValues.put(DenouncesDataModel.CEP, obj.getCep());
-        contentValues.put(DenouncesDataModel.COORDINATES, obj.getA_coord());
         contentValues.put(DenouncesDataModel.NOTES, obj.getNote());
         contentValues.put(DenouncesDataModel.CITY, obj.getA_city());
         contentValues.put(DenouncesDataModel.STATE, obj.getA_state());
@@ -53,7 +52,6 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
         contentValues.put(DenouncesDataModel.DISTRICT, obj.getA_district());
         contentValues.put(DenouncesDataModel.COMPLEMENT, obj.getA_complement());
         contentValues.put(DenouncesDataModel.CEP, obj.getCep());
-        contentValues.put(DenouncesDataModel.COORDINATES, obj.getA_coord());
         contentValues.put(DenouncesDataModel.NOTES, obj.getNote());
         contentValues.put(DenouncesDataModel.CITY, obj.getA_city());
         contentValues.put(DenouncesDataModel.STATE, obj.getA_state());
