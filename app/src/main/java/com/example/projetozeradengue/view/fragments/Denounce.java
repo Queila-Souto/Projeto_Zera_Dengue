@@ -236,7 +236,8 @@ public class Denounce extends Fragment implements View.OnClickListener {
         if (controllerDenounces.create(denounce)) {
             Log.i(AppUtil.TAG, "incluido com sucesso");
             Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
-            back();
+            denounce = null;
+            backMainFragment();
         } else {
             Log.e(AppUtil.TAG, "erro ao incluir");
             Toast.makeText(getActivity().getBaseContext(), "Erro ao registrar denúncia", Toast.LENGTH_LONG).show();
