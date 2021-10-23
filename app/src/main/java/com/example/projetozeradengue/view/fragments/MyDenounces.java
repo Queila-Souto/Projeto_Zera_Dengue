@@ -118,10 +118,6 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
     private void startingComponents() {
         m_btnBack = getActivity().findViewById(R.id.btn_back);
-        m_btn_DeleteUser = getActivity().findViewById(R.id.btn_deleteUser);
-        m_btn_DeleteDen = getActivity().findViewById(R.id.btn_deleteDen);
-        m_insertDenId = getActivity().findViewById(R.id.et_insertDenId);
-        m_insertUserId = getActivity().findViewById(R.id.et_insertUserId);
 
     }
 
@@ -141,13 +137,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                 case R.id.btn_back:
                     back();
                     break;
-                case R.id.btn_deleteUser:
-                    delete_User();
-                    break;
-                case R.id.btn_deleteDen:
-                    delete_denounce();
 
-                    break;
             }
         }
 

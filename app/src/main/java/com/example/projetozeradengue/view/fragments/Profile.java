@@ -18,6 +18,12 @@ import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,9 +31,14 @@ import com.google.android.material.button.MaterialButton;
  * create an instance of this fragment.
  */
 public class Profile extends Fragment {
+    MaterialTextView tvName;
+    MaterialTextView tvBornDate;
+    MaterialTextView tvAge;
+    MaterialTextView tvEmail;
     private User user ;
     private ControllerUser controllerUser ;
     private MaterialButton btn_back;
+    private FirebaseAuth auth;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -64,13 +75,45 @@ public class Profile extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        startingComponents();
+        changeComponents();
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    private void changeComponents() {
+        tvName.setText(user.getNameUser());
+        tvBornDate.setText(user.getDob().toString());
+        tvEmail.setText(user.getEmail());
+        tvAge.setText(calculateAge());
+    }
+
+
+        public Integer calculateAge() {
+            GregorianCalendar hj=new GregorianCalendar();
+            GregorianCalendar nascimento=new GregorianCalendar();
+            if(user.getDob() !=null){
+                nascimento.setTime(user.getDob());
+            }
+            int anohj=hj.get(Calendar.YEAR);
+            int anoNascimento=nascimento.get(Calendar.YEAR);
+            return new Integer(anohj-anoNascimento);
+        }
+
+
+    private void startingComponents() {
+        tvName = getActivity().findViewById(R.id.textNameProfile);
+        tvAge = getActivity().findViewById(R.id.textAgeProfile);
+        tvBornDate = getActivity().findViewById(R.id.textBodProfile);
+        tvEmail = getActivity().findViewById(R.id.textEmailProfile);
+
     }
 
 
@@ -94,7 +137,7 @@ public class Profile extends Fragment {
         title2("Informações de Perfil");
     }
 
-    public void    title1(String title) {
+    public void title1(String title) {
 
         TextView mtitle = getActivity().findViewById(R.id.title);
         mtitle.setText(title);
@@ -110,8 +153,6 @@ public class Profile extends Fragment {
 
     private void update_User(){
         controllerUser = new ControllerUser(getActivity().getBaseContext());
-        user.setId(4);
-        user.setEmail("email alterado");
 
         if (controllerUser.update(user)){
             Toast.makeText(getActivity().getBaseContext(),"Usuario "+user.getNameUser()+" alterado com sucesso....",Toast.LENGTH_LONG).show();
@@ -123,7 +164,7 @@ public class Profile extends Fragment {
         }
     }
 
-    private void user_Show() {
+    private void user_Show() throws ParseException {
 
         controllerUser = new ControllerUser(getActivity().getBaseContext());
         for (User user : controllerUser.showUser(UserDataModel.TABLE)) {

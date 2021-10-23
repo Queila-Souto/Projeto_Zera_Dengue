@@ -9,6 +9,7 @@ import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.datasource.AppDatabase;
 import com.example.projetozeradengue.model.User;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
 
         contentValues = new ContentValues();
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
-        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
+        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob().toString());
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
         contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
     return insert(UserDataModel.TABLE, contentValues);
     }
 
     @Override
-    public List<User> retrieve() {
+    public List<User> retrieve() throws ParseException {
     return showUser(UserDataModel.TABLE);
     }
 
@@ -52,7 +53,7 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
         contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
-        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
+        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob().toString());
 
         return update(UserDataModel.TABLE, contentValues);
 

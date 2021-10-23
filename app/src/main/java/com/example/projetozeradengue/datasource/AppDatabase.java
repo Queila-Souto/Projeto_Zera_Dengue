@@ -14,6 +14,8 @@ import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +96,7 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
-    public List<User> showUser (String nameTable){
+    public List<User> showUser (String nameTable) throws ParseException {
     db = getReadableDatabase();
     List<User> userList = new ArrayList<>();
     String sql = "SELECT * FROM " + nameTable;
@@ -102,11 +104,14 @@ public class AppDatabase extends SQLiteOpenHelper {
         cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()){
             do {
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+
                 User user = new User();
                 user.setId(cursor.getInt(cursor.getColumnIndex(UserDataModel.ID)));
                 user.setNameUser(cursor.getString(cursor.getColumnIndex(UserDataModel.NOME)));
                 user.setEmail(cursor.getString(cursor.getColumnIndex(UserDataModel.EMAIL)));
-                user.setDob(cursor.getString(cursor.getColumnIndex(UserDataModel.DATEOFBORN)));
+                user.setDob(formato.parse(cursor.getString(cursor.getColumnIndex(UserDataModel.DATEOFBORN))));
                 userList.add(user);
 
             } while (cursor.moveToNext());

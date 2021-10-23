@@ -1,10 +1,11 @@
 package com.example.projetozeradengue.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface ICrud<T> {
     public boolean create(T obj);
-    public List<T> retrieve();
+    public List<T> retrieve() throws ParseException;
     public boolean update(T obj);
     public boolean delete(int id);
 

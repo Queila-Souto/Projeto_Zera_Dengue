@@ -2,15 +2,18 @@ package com.example.projetozeradengue.model;
 
 import com.example.projetozeradengue.controller.ICrud;
 
+import java.util.Date;
+
 public class User {
-   private String nameUser , email, password, dob ;
+   private String nameUser , email, password ;
    private int id;
+   private Date dob;
 
 
 
 
     //CONSTRUTOR
-    public User(String nameUser, String email, String password, String dob, int id) {
+    public User(String nameUser, String email, String password, Date dob, int id) {
         this.id = id;
         this.nameUser = nameUser;
         this.email = email;
@@ -54,11 +57,11 @@ public class User {
         this.password = password;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 }

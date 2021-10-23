@@ -22,6 +22,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Footer extends Fragment implements View.OnClickListener {
 
@@ -95,7 +99,11 @@ public class Footer extends Fragment implements View.OnClickListener {
                 SaveUserAuth();
 
                 Log.d(AppUtil.TAG, "FOOTER: Salvando dados");
-                SaveUserDataBase();
+                try {
+                    SaveUserDataBase();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 backActivity();
                 break;
 
@@ -103,10 +111,11 @@ public class Footer extends Fragment implements View.OnClickListener {
             }
         }
 
-    private void SaveUserDataBase() {
+    private void SaveUserDataBase() throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         String name = mname.getText().toString();
-        String bod = mbod.getText().toString();
+        Date bod = formato.parse(mbod.getText().toString());
         String email = memail.getText().toString();
         String password = mpassword.getText().toString();
 
