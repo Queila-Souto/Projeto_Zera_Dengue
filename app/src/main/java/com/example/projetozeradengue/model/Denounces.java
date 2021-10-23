@@ -13,10 +13,10 @@ public class Denounces {
     private String a_state;
     private String a_cep;
     private int id;
-    private Integer userId;
+    private String userId;
 
   //CONSTRUTOR
-    public Denounces(@Nullable Integer userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state,String note ) {
+    public Denounces(@Nullable String userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state, String note ) {
         this.userId = userId;
         this.a_cep = cep;
         this.a_Street = street;
@@ -56,11 +56,11 @@ public class Denounces {
         this.a_cep = cep;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(@Nullable Integer userId) {
+    public void setUserId(@Nullable String userId) {
         this.userId = userId;
     }
 

@@ -19,11 +19,13 @@ import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.core.MaskEditUtil;
 import com.example.projetozeradengue.model.Denounces;
+import com.example.projetozeradengue.model.User;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +38,8 @@ public class Denounce extends Fragment implements View.OnClickListener {
     TextInputEditText m_street, m_number, m_district, m_complement, m_city, m_state, m_note, m_cep;
     ControllerDenounces controllerDenounces;
     Denounces denounce;
+    FirebaseAuth auth;
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -63,7 +67,10 @@ public class Denounce extends Fragment implements View.OnClickListener {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+        auth = FirebaseAuth.getInstance();
+
     }
 
 
@@ -212,8 +219,9 @@ public class Denounce extends Fragment implements View.OnClickListener {
         String city = m_city.getText().toString();
         String state = m_state.getText().toString();
         String note = m_note.getText().toString();
+        String userid = auth.getCurrentUser().getUid();
 
-        denounce.setUserId(null);
+        denounce.setUserId(userid);
         denounce.setCep(cep);
         denounce.setA_Street(street);
         denounce.setA_number(number);
