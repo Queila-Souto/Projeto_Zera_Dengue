@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import androidx.annotation.Nullable;
 
-import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.Denounces;
@@ -69,7 +68,7 @@ public class AppDatabase extends SQLiteOpenHelper {
         return retorno;
     }
 
-    public boolean deleteById(String TableName, int id){
+    public boolean deleteById(String TableName, String id){
         boolean retorno = false;
         db = getWritableDatabase();
 
@@ -108,7 +107,7 @@ public class AppDatabase extends SQLiteOpenHelper {
 
 
                 User user = new User();
-                user.setId(cursor.getInt(cursor.getColumnIndex(UserDataModel.ID)));
+                user.setId(String.valueOf(cursor.getInt(cursor.getColumnIndex(UserDataModel.ID))));
                 user.setNameUser(cursor.getString(cursor.getColumnIndex(UserDataModel.NOME)));
                 user.setEmail(cursor.getString(cursor.getColumnIndex(UserDataModel.EMAIL)));
                 user.setDob(formato.parse(cursor.getString(cursor.getColumnIndex(UserDataModel.DATEOFBORN))));
@@ -130,7 +129,7 @@ public class AppDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do {
                 Denounces denounce = new Denounces();
-                denounce.setId(cursor.getInt(cursor.getColumnIndex(DenouncesDataModel.ID)));
+              //  denounce.setId(cursor.getInt(cursor.getColumnIndex(DenouncesDataModel.ID)));
                 denounce.setUserId(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.USER_ID)));
                 denounce.setCep(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.CEP)));
                 denounce.setA_Street(cursor.getString(cursor.getColumnIndex(DenouncesDataModel.STREET)));

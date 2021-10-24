@@ -3,6 +3,7 @@ package com.example.projetozeradengue.view.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
@@ -18,9 +18,15 @@ import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.model.User;
 import com.example.projetozeradengue.view.activity.LoginActivity;
+import com.example.projetozeradengue.view.activity.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,15 +35,19 @@ import java.util.Date;
 
 public class Footer extends Fragment implements View.OnClickListener {
 
-    public static TextInputEditText mname,memail, mpassword, mbod;
+    public static TextInputEditText mname, memail, mpassword, mbod;
     MaterialButton mbtn_save, mbtn_back;
+    User user = new User();
+    FirebaseAuth newUser = FirebaseAuth.getInstance();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
-        return inflater.inflate(R.layout.fragment_footer,container,false); }
+        return inflater.inflate(R.layout.fragment_footer, container, false);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -47,40 +57,64 @@ public class Footer extends Fragment implements View.OnClickListener {
         mbtn_save.setOnClickListener(this);
 
 
-
-
     }
 
-    private void startingComponents(){
+    private void startingComponents() {
         Log.d(AppUtil.TAG, "FOOTER: Iniciando componentes");
 
-        mbtn_save=getActivity().findViewById((R.id.btn_save));
-        mbtn_back=getActivity().findViewById((R.id.btn_back));
+        mbtn_save = getActivity().findViewById((R.id.btn_save));
+        mbtn_back = getActivity().findViewById((R.id.btn_back));
         mbod = getActivity().findViewById(R.id.ed_date);
         mname = getActivity().findViewById(R.id.ed_name);
         memail = getActivity().findViewById(R.id.ed_email);
         mpassword = getActivity().findViewById(R.id.ed_password);
 
 
-
     }
-        private void backActivity() {
+
+    private void backActivity() {
         Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-        startActivity(intent); }
+        startActivity(intent);
+    }
 
 
-    private void SaveUserAuth() {
-
+    private void createNewAuth() {
         String email = memail.getText().toString();
         String password = mpassword.getText().toString();
 
-        FirebaseAuth newUser = FirebaseAuth.getInstance();
-    newUser.createUserWithEmailAndPassword(email, password); //recuperar dadoss da fragment cadastro
-        Toast.makeText(getActivity().getBaseContext(), "usuario cadastrado", Toast.LENGTH_LONG).show();
+        newUser.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
+            @Override
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    user.setId(newUser.getUid());
+                    Log.d(AppUtil.TAG, "UUID no bd ---> " + user.getId());
+                    Log.d(AppUtil.TAG, "UUID  ---> " + newUser.getUid());
+                    Log.d(AppUtil.TAG, "FOOTER: Criando acesso");
+
+                    try {
+                        saveUserDataBase();
+                        authenticate(user.getEmail(), user.getPassword());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    user.save();
+                    Toast.makeText(getActivity().getBaseContext(), "Usuario cadastrado", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    Toast.makeText(getActivity().getBaseContext(), "Erro ao cadastrar usuário", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+
+        });
+
 
     }
-
-
 
 
     /**
@@ -95,23 +129,41 @@ public class Footer extends Fragment implements View.OnClickListener {
                 backActivity();
                 break;
             case R.id.btn_save:
-                Log.d(AppUtil.TAG, "FOOTER: Autenticando");
-                SaveUserAuth();
 
-                Log.d(AppUtil.TAG, "FOOTER: Salvando dados");
-                try {
-                    SaveUserDataBase();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                backActivity();
+                Log.d(AppUtil.TAG, "FOOTER: Criando acesso");
+                createNewAuth();
+
                 break;
 
 
-            }
         }
+    }
 
-    private void SaveUserDataBase() throws ParseException {
+    private void authenticate(String email, String password) {
+        newUser.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                //task é a tarefa de autenticação. Verificar se houve suscesso
+                if (task.isSuccessful()) {
+                    Toast toast =Toast.makeText(getActivity().getBaseContext(), "Login efetuado com suscesso", Toast.LENGTH_LONG);
+                    toast.show();
+                    gotoActivity(MainActivity.class);
+                } else {
+                    Toast toast =Toast.makeText(getActivity().getBaseContext(), "Usuário não cadastrado", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+
+
+    }
+
+    public void gotoActivity(Class go) {
+        Intent intent = new Intent(getActivity(),go);
+        startActivity(intent);
+    }
+
+    private void saveUserDataBase() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         String name = mname.getText().toString();
@@ -119,29 +171,31 @@ public class Footer extends Fragment implements View.OnClickListener {
         String email = memail.getText().toString();
         String password = mpassword.getText().toString();
 
+
+       Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Repassando dados para model");
+
+       user.setNameUser(name);
+       user.setEmail(email);
+       user.setDob(bod);
+       user.setPassword(password);
+
         Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Estanciando controladora");
         ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
 
-        Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Estanciando model");
-        User user = new User();
-
-        Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Repassando dados para model");
-
-        user.setNameUser(name);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setDob(bod);
-
-        Log.d(AppUtil.TAG, "FOOTER: Salvando dados... teste");
-
-        if (controllerUser.create(user)){
+        if (controllerUser.create(user)) {
             Log.i(AppUtil.TAG, "incluido com sucesso");
-                    } else{
+
+
+        } else {
             Log.e(AppUtil.TAG, "erro ao incluir");
         }
 
 
+    }
 
+    private void errorField() {
+        Toast.makeText(getContext(), "Existem campos vazios. Favor preencher todos os campos", Toast.LENGTH_LONG).show();
+        Log.e("ZeraDengue", "Erro no campo");
     }
 }
 

@@ -7,7 +7,7 @@ public interface ICrud<T> {
     public boolean create(T obj);
     public List<T> retrieve() throws ParseException;
     public boolean update(T obj);
-    public boolean delete(int id);
+    public boolean delete(String id);
 
 }
 /*A interface contem metodos que serão obrigatóriamente implementados

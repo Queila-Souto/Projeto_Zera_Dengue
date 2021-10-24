@@ -33,7 +33,7 @@ public class UserDataModel {
     public static String createTable(){
         Log.d(AppUtil.TAG , "User Data Model: Criando tabela de usuarios");
 
-        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" integer primary key autoincrement, "+NOME+" text, "+EMAIL+" text, "+PASSWORD+" integer, "+DATEOFBORN+" integer "+")";
+        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" integer primary key , "+NOME+" text, "+EMAIL+" text, "+PASSWORD+" integer, "+DATEOFBORN+" integer )";
 
 
         return  queryCreateTable;

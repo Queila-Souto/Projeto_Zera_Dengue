@@ -20,6 +20,7 @@ import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class Profile extends Fragment {
     private ControllerUser controllerUser ;
     private MaterialButton btn_back;
     private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -68,6 +70,7 @@ public class Profile extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,6 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         startingComponents();
-        changeComponents();
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -133,6 +135,7 @@ public class Profile extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        changeComponents();
         title1("Recuperar nome do Banco de Dados");
         title2("Informações de Perfil");
     }

@@ -10,7 +10,6 @@ import com.example.projetozeradengue.datasource.AppDatabase;
 import com.example.projetozeradengue.model.User;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 //A Classe ControllerUser extende AppDatabase, pois todas a comunicação com o BD será deita aqui,
@@ -33,7 +32,7 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
 
         contentValues = new ContentValues();
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
-        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob().toString());
+        contentValues.put(UserDataModel.DATEOFBORN, String.valueOf(obj.getDob()));
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
         contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
     return insert(UserDataModel.TABLE, contentValues);
@@ -60,7 +59,7 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         //Método DELETE do SQL: DELETE FROM TABELA WHERE ID = xxx
         //Lembrando sempre de respeitar o primary Key (id)
 

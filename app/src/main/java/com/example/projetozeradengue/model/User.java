@@ -1,19 +1,20 @@
 package com.example.projetozeradengue.model;
 
-import com.example.projetozeradengue.controller.ICrud;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 
 public class User {
    private String nameUser , email, password ;
-   private int id;
+   private String id;
    private Date dob;
 
 
 
 
     //CONSTRUTOR
-    public User(String nameUser, String email, String password, Date dob, int id) {
+    public User(String nameUser, String email, String password, Date dob, String id) {
         this.id = id;
         this.nameUser = nameUser;
         this.email = email;
@@ -26,11 +27,11 @@ public class User {
     }
 
     //GETTERES E SETTERES
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;}
 
     public String getNameUser() {
@@ -63,5 +64,12 @@ public class User {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    //database
+    public void save(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("users").child(getId()).setValue(this);
+
     }
 }
