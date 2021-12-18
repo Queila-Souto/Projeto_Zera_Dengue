@@ -101,11 +101,11 @@ public class Footer extends Fragment implements View.OnClickListener {
                         e.printStackTrace();
                     }
                     user.save();
-                    Toast.makeText(getActivity().getBaseContext(), "Usuario cadastrado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Usuario cadastrado", Toast.LENGTH_LONG).show();
                 }
 
                 else {
-                    Toast.makeText(getActivity().getBaseContext(), "Erro ao cadastrar usuário", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Erro ao cadastrar usuário", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -145,11 +145,11 @@ public class Footer extends Fragment implements View.OnClickListener {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 //task é a tarefa de autenticação. Verificar se houve suscesso
                 if (task.isSuccessful()) {
-                    Toast toast =Toast.makeText(getActivity().getBaseContext(), "Login efetuado com suscesso", Toast.LENGTH_LONG);
+                    Toast toast =Toast.makeText(getContext(), "Login efetuado com suscesso", Toast.LENGTH_LONG);
                     toast.show();
                     gotoActivity(MainActivity.class);
                 } else {
-                    Toast toast =Toast.makeText(getActivity().getBaseContext(), "Usuário não cadastrado", Toast.LENGTH_LONG);
+                    Toast toast =Toast.makeText(getContext().getApplicationContext(), "Usuário não cadastrado", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }

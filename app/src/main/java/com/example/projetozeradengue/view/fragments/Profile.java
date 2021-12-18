@@ -2,6 +2,7 @@ package com.example.projetozeradengue.view.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -17,9 +18,14 @@ import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
@@ -78,23 +84,45 @@ public class Profile extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         auth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        startingComponents();
         // Inflate the layout for this fragment
 
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    private void changeComponents() {
-        tvName.setText(user.getNameUser());
+    private void changeComponents(){
+        captureData("nameUser",tvName);
+        captureData("email",tvEmail);
+        captureData("email",tvBornDate);
         tvBornDate.setText(user.getDob().toString());
-        tvEmail.setText(user.getEmail());
-        tvAge.setText(calculateAge());
+    }
+    private void captureData(String fillUsersTable, TextView textView) {
+
+       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(auth.getCurrentUser().getUid()).child(fillUsersTable).get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                             String dataCaptured = String.valueOf(task.getResult().getValue());
+
+                            textView.setText(dataCaptured);
+
+                        }
+                    }
+                });
+
+
+        //tvAge.setText(calculateAge());
     }
 
 
@@ -135,9 +163,11 @@ public class Profile extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        startingComponents();
         changeComponents();
         title1("Recuperar nome do Banco de Dados");
         title2("Informações de Perfil");
+
     }
 
     public void title1(String title) {
