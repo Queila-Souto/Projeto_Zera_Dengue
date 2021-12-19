@@ -28,12 +28,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Footer extends Fragment implements View.OnClickListener {
+public class Footer extends Fragment implements View.OnClickListener, Serializable {
 
     public static TextInputEditText mname, memail, mpassword, mbod;
     MaterialButton mbtn_save, mbtn_back;
@@ -88,10 +89,6 @@ public class Footer extends Fragment implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    user.setId(newUser.getUid());
-                    Log.d(AppUtil.TAG, "UUID no bd ---> " + user.getId());
-                    Log.d(AppUtil.TAG, "UUID  ---> " + newUser.getUid());
-                    Log.d(AppUtil.TAG, "FOOTER: Criando acesso");
 
                     try {
                         saveUserDataBase();
@@ -102,9 +99,7 @@ public class Footer extends Fragment implements View.OnClickListener {
                     }
                     user.save();
                     Toast.makeText(getContext(), "Usuario cadastrado", Toast.LENGTH_LONG).show();
-                }
-
-                else {
+                } else {
                     Toast.makeText(getContext(), "Erro ao cadastrar usuário", Toast.LENGTH_LONG).show();
                 }
 
@@ -145,11 +140,11 @@ public class Footer extends Fragment implements View.OnClickListener {
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 //task é a tarefa de autenticação. Verificar se houve suscesso
                 if (task.isSuccessful()) {
-                    Toast toast =Toast.makeText(getContext(), "Login efetuado com suscesso", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getContext(), "Login efetuado com suscesso", Toast.LENGTH_LONG);
                     toast.show();
                     gotoActivity(MainActivity.class);
                 } else {
-                    Toast toast =Toast.makeText(getContext().getApplicationContext(), "Usuário não cadastrado", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getContext().getApplicationContext(), "Usuário não cadastrado", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }
@@ -159,27 +154,23 @@ public class Footer extends Fragment implements View.OnClickListener {
     }
 
     public void gotoActivity(Class go) {
-        Intent intent = new Intent(getActivity(),go);
+        Intent intent = new Intent(getActivity(), go);
         startActivity(intent);
     }
 
     private void saveUserDataBase() throws ParseException {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         String name = mname.getText().toString();
-        Date bod = formato.parse(mbod.getText().toString());
+        String bod = mbod.getText().toString();
         String email = memail.getText().toString();
         String password = mpassword.getText().toString();
 
+        user.setId(newUser.getCurrentUser().getUid());
+        user.setNameUser(name);
+        user.setEmail(email);
+        user.setDob(bod);
+        user.setPassword(password);
 
-       Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Repassando dados para model");
-
-       user.setNameUser(name);
-       user.setEmail(email);
-       user.setDob(bod);
-       user.setPassword(password);
-
-        Log.d(AppUtil.TAG, "FOOTER: Salvando dados... Estanciando controladora");
         ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
 
         if (controllerUser.create(user)) {

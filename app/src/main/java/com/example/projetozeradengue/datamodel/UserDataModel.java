@@ -33,15 +33,23 @@ public class UserDataModel {
     public static String createTable(){
         Log.d(AppUtil.TAG , "User Data Model: Criando tabela de usuarios");
 
-        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" integer primary key , "+NOME+" text, "+EMAIL+" text, "+PASSWORD+" integer, "+DATEOFBORN+" integer )";
+        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" text primary key , "+NOME+" text, "+EMAIL+" text, "+PASSWORD+" integer, "+DATEOFBORN+" integer )";
 
 
         return  queryCreateTable;
     }
 
 
-}
+
 
 //PASSO 5 - QUERIES DE CONSULTA
+public static String getData(){
+    Log.d(AppUtil.TAG , "User Data Model: Criando tabela de usuarios");
 
+    queryCreateTable = "SELECT ";
+
+
+    return  queryCreateTable;
+}
+}
 

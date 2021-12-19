@@ -12,7 +12,7 @@ import com.example.projetozeradengue.model.User;
 import java.text.ParseException;
 import java.util.List;
 
-//A Classe ControllerUser extende AppDatabase, pois todas a comunicação com o BD será deita aqui,
+//A Classe ControllerUser extende AppDatabase, pois todas a comunicação com o BD será feita aqui,
 // dentro da camada controller.
 // Implementa a interface  Icrud para controlar as ações do bd(CRUD)
 public class ControllerUser extends AppDatabase implements  ICrud<User>{
@@ -31,8 +31,9 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         //Novo registro em SQL = INSERT INTO TABLE ( ... ) VALUES ( ****)
 
         contentValues = new ContentValues();
+        contentValues.put(UserDataModel.ID, obj.getId());
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
-        contentValues.put(UserDataModel.DATEOFBORN, String.valueOf(obj.getDob()));
+        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
         contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
     return insert(UserDataModel.TABLE, contentValues);
@@ -42,6 +43,8 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
     public List<User> retrieve() throws ParseException {
     return showUser(UserDataModel.TABLE);
     }
+
+
 
     @Override
     public boolean update(User obj) {

@@ -13,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
+import com.example.projetozeradengue.core.CallFetchUser;
+import com.example.projetozeradengue.model.User;
 import com.example.projetozeradengue.view.activity.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.text.ParseException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +27,13 @@ import com.google.firebase.auth.FirebaseAuth;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
-private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newdenounce ;
+    private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newdenounce;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    User userCorrent = new User();
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +67,7 @@ private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newd
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -78,6 +85,14 @@ private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newd
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        CallFetchUser callFetchUser = new CallFetchUser();
+        try {
+            userCorrent = callFetchUser.showUserById(getActivity().getBaseContext(), auth.getCurrentUser().getUid());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -89,15 +104,20 @@ private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newd
         title1("Menu Principal");
 
 
+        //
+
+        //Log.d(AppUtil.TAG, user.getId() + user.getNameUser() + user.getDob() + user.getEmail());
+
+
     }
 
-    public void    title1(String title) {
+    public void title1(String title) {
 
         TextView mtitle = getActivity().findViewById(R.id.title);
         mtitle.setText(title);
     }
 
-    public void title2(String title2){
+    public void title2(String title2) {
         TextView mtitle2 = getActivity().findViewById(R.id.title2);
         mtitle2.setText(title2);
     }
@@ -109,16 +129,15 @@ private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newd
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_denounce:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new Denounce() ).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MyDenounces()).commit();
                 break;
             case R.id.btn_my_denounce:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new MyDenounces() ).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new Denounce()).commit();
                 break;
             case R.id.btn_my_profile:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new Profile() ).commit();
-
+                goToProfile();
                 break;
             case R.id.btn_exit:
                 logof();
@@ -127,22 +146,33 @@ private MaterialButton m_btn_exit, m_btn_myprofile, m_btn_mydenounce, m_btn_newd
         }
     }
 
-    private void logof() {
-        FirebaseAuth.getInstance().signOut();
-        Toast.makeText(getActivity().getBaseContext(),"Logout efetuado com sucesso", Toast.LENGTH_LONG).show();
+    private void goToProfile() {
+        Fragment profile = new Profile();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", userCorrent);
+        profile.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.frameLayout2, profile).commit();
+
+
     }
 
-
+    private void logof() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(getActivity().getBaseContext(), "Logout efetuado com sucesso",
+                Toast.LENGTH_LONG).show();
+    }
 
 
     private void backActivity() {
         Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-        startActivity(intent); }
+        startActivity(intent);
+    }
 
-    private void startingComponents(){
+    private void startingComponents() {
         m_btn_exit = getActivity().findViewById(R.id.btn_exit);
-        m_btn_myprofile=getActivity().findViewById((R.id.btn_my_profile));
-        m_btn_mydenounce=getActivity().findViewById((R.id.btn_my_denounce));
+        m_btn_myprofile = getActivity().findViewById((R.id.btn_my_profile));
+        m_btn_mydenounce = getActivity().findViewById((R.id.btn_my_denounce));
         m_btn_newdenounce = getActivity().findViewById(R.id.btn_denounce);
 
     }

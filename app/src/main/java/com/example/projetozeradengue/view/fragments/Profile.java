@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.core.AppUtil;
+import com.example.projetozeradengue.core.CallFetchUser;
 import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -42,8 +45,7 @@ public class Profile extends Fragment {
     MaterialTextView tvBornDate;
     MaterialTextView tvAge;
     MaterialTextView tvEmail;
-    private User user ;
-    private ControllerUser controllerUser ;
+    private User user;
     private MaterialButton btn_back;
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
@@ -92,50 +94,40 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        Bundle bundle = getArguments();
+        setBundle(bundle);
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    private void changeComponents(){
-        captureData("nameUser",tvName);
-        captureData("email",tvEmail);
-        captureData("email",tvBornDate);
-        tvBornDate.setText(user.getDob().toString());
+    private void  setBundle(Bundle bundle) {
+
+        user = bundle.getParcelable("user");
+
     }
-    private void captureData(String fillUsersTable, TextView textView) {
 
-       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(auth.getCurrentUser().getUid()).child(fillUsersTable).get()
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                        }
-                        else {
-                             String dataCaptured = String.valueOf(task.getResult().getValue());
-
-                            textView.setText(dataCaptured);
-
-                        }
-                    }
-                });
-
-
-        //tvAge.setText(calculateAge());
+    private void changeComponents(User user) throws ParseException {
+       tvName.setText(user.getNameUser());
+       tvEmail.setText(user.getEmail());
+       tvBornDate.setText(user.getDob());
+       tvAge.setText(String.valueOf(calculateAge(user.getDob())));
     }
 
 
-        public Integer calculateAge() {
-            GregorianCalendar hj=new GregorianCalendar();
-            GregorianCalendar nascimento=new GregorianCalendar();
-            if(user.getDob() !=null){
-                nascimento.setTime(user.getDob());
-            }
-            int anohj=hj.get(Calendar.YEAR);
-            int anoNascimento=nascimento.get(Calendar.YEAR);
-            return new Integer(anohj-anoNascimento);
+
+
+    public Integer calculateAge(String date) throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
+        Date dateFormated = formato.parse(date);
+
+        GregorianCalendar hj = new GregorianCalendar();
+        GregorianCalendar nascimento = new GregorianCalendar();
+        if (user.getDob() != null) {
+            nascimento.setTime(dateFormated);
         }
+        int anohj = hj.get(Calendar.YEAR);
+        int anoNascimento = nascimento.get(Calendar.YEAR);
+        return new Integer(anohj - anoNascimento);
+    }
 
 
     private void startingComponents() {
@@ -150,21 +142,26 @@ public class Profile extends Fragment {
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    btn_back = getActivity().findViewById(R.id.btn_Back);
-    btn_back.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            backMainFragment();
-        }
-    });
+        btn_back = getActivity().findViewById(R.id.btn_Back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backMainFragment();
+            }
+        });
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         startingComponents();
-        changeComponents();
+        try {
+            changeComponents(user);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         title1("Recuperar nome do Banco de Dados");
         title2("Informações de Perfil");
 
@@ -176,32 +173,16 @@ public class Profile extends Fragment {
         mtitle.setText(title);
     }
 
-    public void title2(String title2){
+    public void title2(String title2) {
         TextView mtitle2 = getActivity().findViewById(R.id.title2);
         mtitle2.setText(title2);
     }
+
     private void backMainFragment() {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2, new MainFragment()).commit();
     }
 
-    private void update_User(){
-        controllerUser = new ControllerUser(getActivity().getBaseContext());
 
-        if (controllerUser.update(user)){
-            Toast.makeText(getActivity().getBaseContext(),"Usuario "+user.getNameUser()+" alterado com sucesso....",Toast.LENGTH_LONG).show();
-            Log.i(AppUtil.TAG, "Dado alterado");
-        } else {
-            Toast.makeText(getActivity().getBaseContext(),"Usuario "+user.getNameUser()+" nao foi possivel alterar....",Toast.LENGTH_LONG).show();
 
-            Log.e(AppUtil.TAG, "Não foi possível alterar");
-        }
-    }
 
-    private void user_Show() throws ParseException {
-
-        controllerUser = new ControllerUser(getActivity().getBaseContext());
-        for (User user : controllerUser.showUser(UserDataModel.TABLE)) {
-            Log.i("Dados Usuarios", " " + user.getId() + " " + user.getNameUser() + " " + user.getDob() + " " + user.getEmail());
-        }
-    }
 }

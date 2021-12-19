@@ -18,5 +18,12 @@ public static final int FAILURE_RESULT = 1;
     public static final String RESULT_DATA_KEY = PACKAGE_NAME + ".RESULT_DATA_KEY";
     public static final String LOCATION_DATA_EXTRA = PACKAGE_NAME + ".LOCATION.DATA.EXTRA";
 
-    }
+    public static final String REALTIME_DATABASE_USERS = "users";
+    public static final String REALTIME_DATABASE_DATE_BORN = "dob";
+    public static final String REALTIME_DATABASE_EMAIL = "email";
+    public static final String REALTIME_DATABASE_ID = "id";
+    public static final String REALTIME_DATABASE_NAME = "nameUser";
+    public static final String REALTIME_DATABASE_PASSWORD = "password";
+
+}
 
