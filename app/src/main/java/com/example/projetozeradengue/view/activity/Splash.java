@@ -2,22 +2,17 @@ package com.example.projetozeradengue.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import com.example.projetozeradengue.R;
-import com.example.projetozeradengue.controller.ControllerDenounces;
-import com.example.projetozeradengue.controller.ControllerUser;
-import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datasource.AppDatabase;
-import com.example.projetozeradengue.model.User;
 
 public class Splash extends AppCompatActivity {
 
-int time = 2000;
-
+int time = 10000;
 
 
     @Override
@@ -29,6 +24,7 @@ int time = 2000;
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class CarregamentoParalelo extends AsyncTask<Void,Void,Void>{
         /**
          * Override this method to perform a computation on a background thread. The
@@ -50,7 +46,8 @@ int time = 2000;
          */
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("Teste","executando em segundo plano");
+        new AppDatabase(getApplicationContext());
+
             return null;
         }
 
@@ -62,13 +59,10 @@ int time = 2000;
     }
     private void goToActivity(){
     Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            Intent intent = new Intent(Splash.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
+    handler.postDelayed(() -> {
+        Intent intent = new Intent(Splash.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     },time);
 
     }
