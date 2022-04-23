@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/fragment_profile.xml" value="0.17297297297297298" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/activity_main2.xml" value="0.24864130434782608" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/activity_new_user.xml" value="0.16531531531531532" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/fragment_cadastro.xml" value="0.1" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/fragment_main.xml" value="0.31351351351351353" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/fragment_my_denounces.xml" value="0.1581081081081081" />
+        <entry key="..\:/www/Projetos Android Studio/Projeto_Zera_Dengue/ProjetoZeraDengue/app/src/main/res/layout/fragment_profile.xml" value="0.16" />
       </map>
     </option>
   </component>
