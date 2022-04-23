@@ -3,86 +3,75 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/fundo"
+    android:layout_margin="5dp"
+    android:padding="5dp"
     tools:context=".view.fragments.Cadastro">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/container"
-        style="@style/View2">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageProfile"
-            android:src="@drawable/ic_baseline_person_pin_24"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textNameProfile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            style="@style/View2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
 
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/EditText"
-                android:id="@+id/textNameProfile"
-                android:hint="NOME"
-                app:layout_constraintBottom_toTopOf="@id/textBodProfile"
-                app:layout_constraintTop_toBottomOf="@id/imageProfile"
-                app:helperText="Nome Completo"
+            <ImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_person_pin_24"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textNameProfile"
                 style="@style/EditText"
+                android:hint="NOME"
+                app:helperText="Nome Completo"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageProfile" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textBodProfile"
+                style="@style/EditText"
                 android:hint="Data de Nascimento"
-                app:layout_constraintBottom_toTopOf="@id/textAgeProfile"
-                app:layout_constraintEnd_toEndOf="@id/textNameProfile"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/textNameProfile"
 
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textNameProfile" />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/EditText"
-                android:id="@+id/textAgeProfile"
-                android:hint="Idade"
-                app:layout_constraintBottom_toTopOf="@id/textEmailProfile"
-                app:layout_constraintEnd_toEndOf="@id/textNameProfile"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/textEmailProfile"
-
-                />
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/EditText"
                 android:id="@+id/textEmailProfile"
+                style="@style/EditText"
                 android:hint="E-mail"
-                app:layout_constraintBottom_toBottomOf="@id/container"
-                app:layout_constraintEnd_toEndOf="@id/textNameProfile"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/textAgeProfile"
 
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textBodProfile" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Button1"
-            android:id="@+id/btn_Back"
-            app:icon="@drawable/ic_baseline_arrow_back_ios_24"
-            app:iconTint="@color/vermelho"
-            android:layout_margin="10dp"
-            android:text="Voltar"
-            android:textSize="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textEmailProfile"
-            app:layout_constraintStart_toStartOf="parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_Back"
+                style="@style/Button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voltar"
+                android:textSize="10dp"
+                app:icon="@drawable/ic_baseline_arrow_back_ios_24"
+                app:iconTint="@color/vermelho"
 
-            />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textEmailProfile" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -100,6 +89,6 @@
                 app:layout_constraintGuide_begin="-8dp" />
 
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

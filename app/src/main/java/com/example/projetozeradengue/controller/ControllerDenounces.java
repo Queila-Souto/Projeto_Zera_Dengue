@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
-import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.datasource.AppDatabase;
 import com.example.projetozeradengue.model.Denounces;
 
@@ -62,7 +61,7 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
 
         return deleteById(DenouncesDataModel.TABLE, id);
     }

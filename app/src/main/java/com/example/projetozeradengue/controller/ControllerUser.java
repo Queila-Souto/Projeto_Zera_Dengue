@@ -9,10 +9,10 @@ import com.example.projetozeradengue.datamodel.UserDataModel;
 import com.example.projetozeradengue.datasource.AppDatabase;
 import com.example.projetozeradengue.model.User;
 
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.List;
 
-//A Classe ControllerUser extende AppDatabase, pois todas a comunicação com o BD será deita aqui,
+//A Classe ControllerUser extende AppDatabase, pois todas a comunicação com o BD será feita aqui,
 // dentro da camada controller.
 // Implementa a interface  Icrud para controlar as ações do bd(CRUD)
 public class ControllerUser extends AppDatabase implements  ICrud<User>{
@@ -31,6 +31,7 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         //Novo registro em SQL = INSERT INTO TABLE ( ... ) VALUES ( ****)
 
         contentValues = new ContentValues();
+        contentValues.put(UserDataModel.ID, obj.getId());
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
         contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
@@ -39,9 +40,11 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
     }
 
     @Override
-    public List<User> retrieve() {
+    public List<User> retrieve() throws ParseException {
     return showUser(UserDataModel.TABLE);
     }
+
+
 
     @Override
     public boolean update(User obj) {
@@ -52,14 +55,14 @@ public class ControllerUser extends AppDatabase implements  ICrud<User>{
         contentValues.put(UserDataModel.NOME, obj.getNameUser());
         contentValues.put(UserDataModel.EMAIL, obj.getEmail());
         contentValues.put(UserDataModel.PASSWORD, obj.getPassword());
-        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob());
+        contentValues.put(UserDataModel.DATEOFBORN, obj.getDob().toString());
 
         return update(UserDataModel.TABLE, contentValues);
 
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String id) {
         //Método DELETE do SQL: DELETE FROM TABELA WHERE ID = xxx
         //Lembrando sempre de respeitar o primary Key (id)
 
