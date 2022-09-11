@@ -48,25 +48,17 @@
             app:layout_constraintTop_toBottomOf="@id/layoutname"
             app:helperText="Data de Nascimento*"
             app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
-            app:errorEnabled="true"
+            app:errorEnabled="true">
 
-
-
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-
+            <com.santalu.maskara.widget.MaskEditText
                 android:id="@+id/ed_date"
-                style="@style/EditText"
-                android:inputType="date"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="true"
-                android:hint="Data de Nascimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                app:mask="__/__/____"
+                app:maskCharacter="_"
+                app:maskStyle="persistent" />
 
-
-
-                />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -86,7 +78,6 @@
                 style="@style/EditText"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
