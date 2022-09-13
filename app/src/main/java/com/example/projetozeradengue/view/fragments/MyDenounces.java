@@ -34,7 +34,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     User user = new User();
 
     MaterialButton m_btnBack, m_btn_DeleteUser, m_btn_DeleteDen;
-   TextInputEditText m_insertUserId , m_insertDenId;
+    TextInputEditText m_insertUserId , m_insertDenId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,17 +82,15 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         startingComponents();
-        m_btn_DeleteUser.setOnClickListener(this);
-        m_btn_DeleteDen.setOnClickListener(this);
-        m_btnBack.setOnClickListener(this);
+        denounces_Show();
     }
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_my_denounces, container, false);
     }
 
@@ -117,6 +115,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
     private void startingComponents() {
         m_btnBack = getActivity().findViewById(R.id.btn_back);
+        m_btnBack.setOnClickListener(this);
 
     }
 
@@ -196,7 +195,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 //    }
 
     private void denounces_Show() {
-
+        Log.i("Dados Denúncia" , "teste");
         controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
         for (Denounces den: controllerDenounces.showDenounce(DenouncesDataModel.TABLE)) {
             Log.i("Dados Denúncia" , " "+den.getId()+" "+den.getUserId()+" "+den.getCep()+" "+den.getA_Street()+" "+den.getA_number()+" "+den.getA_complement()+" "+den.getA_district()+" "+den.getA_city()+" "+den.getA_state()+" "+den.getNote());

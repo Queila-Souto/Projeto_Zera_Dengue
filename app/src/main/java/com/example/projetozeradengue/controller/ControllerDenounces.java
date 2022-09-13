@@ -55,8 +55,6 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
         contentValues.put(DenouncesDataModel.CITY, obj.getA_city());
         contentValues.put(DenouncesDataModel.STATE, obj.getA_state());
 
-
-
         return update(DenouncesDataModel.TABLE, contentValues);
     }
 

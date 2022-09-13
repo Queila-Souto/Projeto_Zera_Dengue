@@ -125,7 +125,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
         m_state = getActivity().findViewById(R.id.et_state);
         m_note = getActivity().findViewById(R.id.et_note);
 
-
         //masks
         m_cep.addTextChangedListener(MaskEditUtil.mask(m_cep,MaskEditUtil.FORMAT_CEP));
         m_cep.addTextChangedListener(new TextWatcher(){
@@ -151,8 +150,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
 
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -167,7 +164,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
 
     private void searchforCep() {
         String cep_text = m_cep.getText().toString();
@@ -236,6 +232,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
         if (controllerDenounces.create(denounce)) {
             Log.i(AppUtil.TAG, "incluido com sucesso");
             Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
+            denounce.save();
             denounce = null;
             backMainFragment();
         } else {
