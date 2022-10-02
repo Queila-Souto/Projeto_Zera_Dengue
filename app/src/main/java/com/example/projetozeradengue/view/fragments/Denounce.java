@@ -19,13 +19,14 @@ import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.core.MaskEditUtil;
 import com.example.projetozeradengue.model.Denounces;
-import com.example.projetozeradengue.model.User;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,7 +126,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
         m_state = getActivity().findViewById(R.id.et_state);
         m_note = getActivity().findViewById(R.id.et_note);
 
-
         //masks
         m_cep.addTextChangedListener(MaskEditUtil.mask(m_cep,MaskEditUtil.FORMAT_CEP));
         m_cep.addTextChangedListener(new TextWatcher(){
@@ -151,8 +151,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
 
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -167,7 +165,6 @@ public class Denounce extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
 
     private void searchforCep() {
         String cep_text = m_cep.getText().toString();
@@ -220,6 +217,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
         String state = m_state.getText().toString();
         String note = m_note.getText().toString();
         String userid = auth.getCurrentUser().getUid();
+        String id = UUID.randomUUID().toString();
 
         denounce.setUserId(userid);
         denounce.setCep(cep);
@@ -230,19 +228,22 @@ public class Denounce extends Fragment implements View.OnClickListener {
         denounce.setA_city(city);
         denounce.setA_state(state);
         denounce.setNote(note);
+        denounce.setId(id);
 
         Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia ");
 
         if (controllerDenounces.create(denounce)) {
             Log.i(AppUtil.TAG, "incluido com sucesso");
             Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
-            denounce = null;
+            denounce.save();
+            //denounce = null;
             backMainFragment();
         } else {
             Log.e(AppUtil.TAG, "erro ao incluir");
             Toast.makeText(getActivity().getBaseContext(), "Erro ao registrar denúncia", Toast.LENGTH_LONG).show();
 
         }
+
     }
 
     private void back() {

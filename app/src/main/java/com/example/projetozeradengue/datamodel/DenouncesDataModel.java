@@ -40,7 +40,7 @@ public class DenouncesDataModel {
     public static String createTable(){
         Log.d(AppUtil.TAG , "Denounces Data Model: Criando tabela de denúncias");
 
-        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" integer primary key autoincrement, "+USER_ID+" integer, "+STREET+" text, "+NUMBER+" text, "+COMPLEMENT+" text, "+DISTRICT+" text, "+CITY+ " text, "+ STATE+" text, "+CEP+" integer, "+NOTES+" text, "+ "CONSTRAINT "+FOREIGN_KEY+" FOREIGN KEY ("+USER_ID+") REFERENCES "+ REFERENCES_Table+" ("+REFERENCES_Column+") )";
+        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" text primary key, "+USER_ID+" integer, "+STREET+" text, "+NUMBER+" text, "+COMPLEMENT+" text, "+DISTRICT+" text, "+CITY+ " text, "+ STATE+" text, "+CEP+" integer, "+NOTES+" text, "+ "CONSTRAINT "+FOREIGN_KEY+" FOREIGN KEY ("+USER_ID+") REFERENCES "+ REFERENCES_Table+" ("+REFERENCES_Column+") )";
 
 
         return  queryCreateTable;
