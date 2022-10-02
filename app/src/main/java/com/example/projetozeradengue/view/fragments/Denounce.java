@@ -19,13 +19,14 @@ import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.core.MaskEditUtil;
 import com.example.projetozeradengue.model.Denounces;
-import com.example.projetozeradengue.model.User;
 import com.example.projetozeradengue.retrofit_APIS.model.CEP;
 import com.example.projetozeradengue.retrofit_APIS.model.SimpleCallback;
 import com.example.projetozeradengue.retrofit_APIS.service.CEPService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -216,6 +217,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
         String state = m_state.getText().toString();
         String note = m_note.getText().toString();
         String userid = auth.getCurrentUser().getUid();
+        String id = UUID.randomUUID().toString();
 
         denounce.setUserId(userid);
         denounce.setCep(cep);
@@ -226,6 +228,7 @@ public class Denounce extends Fragment implements View.OnClickListener {
         denounce.setA_city(city);
         denounce.setA_state(state);
         denounce.setNote(note);
+        denounce.setId(id);
 
         Log.d(AppUtil.TAG, "DENOUNCE: Salvando dados denuncia ");
 
@@ -233,13 +236,14 @@ public class Denounce extends Fragment implements View.OnClickListener {
             Log.i(AppUtil.TAG, "incluido com sucesso");
             Toast.makeText(getActivity().getBaseContext(), "Denúncia registrada com sucesso", Toast.LENGTH_LONG).show();
             denounce.save();
-            denounce = null;
+            //denounce = null;
             backMainFragment();
         } else {
             Log.e(AppUtil.TAG, "erro ao incluir");
             Toast.makeText(getActivity().getBaseContext(), "Erro ao registrar denúncia", Toast.LENGTH_LONG).show();
 
         }
+
     }
 
     private void back() {

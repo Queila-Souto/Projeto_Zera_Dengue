@@ -22,6 +22,7 @@ public class ControllerDenounces extends AppDatabase implements ICrud<Denounces>
     @Override
     public boolean create(Denounces obj) {
         contentValues = new ContentValues();
+        contentValues.put(DenouncesDataModel.ID, obj.getId());
         contentValues.put(DenouncesDataModel.USER_ID, obj.getUserId());
         contentValues.put(DenouncesDataModel.STREET, obj.getA_Street());
         contentValues.put(DenouncesDataModel.NUMBER, obj.getA_number());

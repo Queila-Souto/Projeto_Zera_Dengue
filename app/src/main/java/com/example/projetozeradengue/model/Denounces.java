@@ -25,7 +25,8 @@ public class Denounces implements Parcelable{
 
 
   //CONSTRUTOR
-    public Denounces(@Nullable String userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state, String note ) {
+    public Denounces(@Nullable String id,@Nullable String userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state, String note ) {
+       this.id = id;
         this.userId = userId;
         this.a_cep = cep;
         this.a_Street = street;
@@ -40,7 +41,6 @@ public class Denounces implements Parcelable{
     public Denounces() {
 
     }
-
 
     //GETTERES E SETTERES
     public String getA_state() {
@@ -139,77 +139,54 @@ public class Denounces implements Parcelable{
         reference.child(AppUtil.REALTIME_DATABASE_DENOUNCE).child(getId()).setValue(this);
 
     }
-
-
     //  IMPLEMENTAÇÃO DE PARCELABLE
 
-    //Construtor usado pelo android para criar a nossa classe, neste caso User
+    //Construtor usado pelo android para criar a nossa classe, neste caso Denounce
+
+
     protected Denounces(Parcel in) {
         a_Street = in.readString();
         a_number = in.readString();
         a_district = in.readString();
-        a_city = in.readString();
-        note = in.readString();
         a_complement = in.readString();
+        a_city = in.readString();
+        a_coord = in.readString();
+        note = in.readString();
         a_state = in.readString();
         a_cep = in.readString();
         id = in.readString();
         userId = in.readString();
-
-
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Creator<Denounces> CREATOR = new Creator<Denounces>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public Denounces createFromParcel(Parcel in) {
+            return new Denounces(in);
         }
 
         @Override
-        public User[] newArray(int size) {
+        public Denounces[] newArray(int size) {
             throw new UnsupportedOperationException();
             //return new User[size];
+        } };
+
+        @Override
+        public int describeContents() {
+            return 0;
         }
-    };
 
-
-    /**
-     * Describe the kinds of special objects contained in this Parcelable
-     * instance's marshaled representation. For example, if the object will
-     * include a file descriptor in the output of {@link #writeToParcel(Parcel, int)},
-     * the return value of this method must include the
-     * {@link #CONTENTS_FILE_DESCRIPTOR} bit.
-     *
-     * @return a bitmask indicating the set of special object types marshaled
-     * by this Parcelable object instance.
-     */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /**
-     * Flatten this object in to a Parcel.
-     *
-     * @param dest  The Parcel in which the object should be written.
-     * @param flags Additional flags about how the object should be written.
-     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
-     */
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString( a_Street);
-        dest.writeString(a_number);
-        dest.writeString(a_district);
-        dest.writeString(a_city);
-        dest.writeString(note);
-        dest.writeString(a_complement);
-        dest.writeString(a_state);
-        dest.writeString(userId);
-
-    }
-
-
-
-
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(a_Street);
+            parcel.writeString(a_number);
+            parcel.writeString(a_district);
+            parcel.writeString(a_complement);
+            parcel.writeString(a_city);
+            parcel.writeString(a_coord);
+            parcel.writeString(note);
+            parcel.writeString(a_state);
+            parcel.writeString(a_cep);
+            parcel.writeString(id);
+            parcel.writeString(userId);
+        }
 }
