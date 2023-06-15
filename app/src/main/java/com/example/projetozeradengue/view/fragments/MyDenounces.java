@@ -2,6 +2,7 @@ package com.example.projetozeradengue.view.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -21,6 +22,11 @@ import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,7 +88,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         startingComponents();
-        denounces_Show();
+        denounces_fb();
     }
 
 
@@ -157,23 +163,6 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 //
 //    }
 
-//    private void delete_User() {
-//        ControllerUser controllerUser = new ControllerUser(getActivity().getBaseContext());
-//        String userId = Integer.parseInt(m_insertUserId.getText().toString().trim());
-//
-//        user.setId(userId);
-//
-//        if (controllerUser.delete(user.getId())){
-//            Log.i(AppUtil.TAG, "excluido com sucesso");
-//            Toast.makeText(getActivity().getBaseContext(), "Usuário excluida com sucesso", Toast.LENGTH_LONG).show();
-//            back();
-//        } else{
-//            Log.e(AppUtil.TAG, "erro ao excluir");
-//            Toast.makeText(getActivity().getBaseContext(), "Erro ao excluir denúncia", Toast.LENGTH_LONG).show();
-//
-//        }
-//
-//    }
 
 //    private void update_Denounce() {
 //        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
@@ -200,6 +189,25 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
         for (Denounces den: controllerDenounces.showDenounce(DenouncesDataModel.TABLE)) {
             Log.i("Dados Denúncia" , " "+den.getId()+" "+den.getUserId()+" "+den.getCep()+" "+den.getA_Street()+" "+den.getA_number()+" "+den.getA_complement()+" "+den.getA_district()+" "+den.getA_city()+" "+den.getA_state()+" "+den.getNote());
         }
+    }
+
+    private void denounces_fb() {
+        Log.i("Dados Denúncia" , "denuncias do firebase");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("denounces");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (DataSnapshot snapshot : datasnapshot.getChildren()){
+                    String value = snapshot.toString();
+                    Log.i("Dados Denúncia" , "listando denuncia"+value);
+                };
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
