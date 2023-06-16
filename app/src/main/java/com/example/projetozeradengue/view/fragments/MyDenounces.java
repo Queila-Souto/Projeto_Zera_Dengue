@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.controller.ControllerUser;
+import com.example.projetozeradengue.datamodel.AdapterDenounces;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
@@ -27,6 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MyDenounces#newInstance} factory method to
@@ -34,10 +40,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class MyDenounces extends Fragment implements View.OnClickListener {
     ControllerDenounces controllerDenounces;
-    ControllerUser controllerUser;
-    Denounces denounce = new Denounces();
-    User user = new User();
-
+    List<String> dados = new ArrayList<>(); // Lista de dados a serem exibidos
     MaterialButton m_btnBack, m_btn_DeleteUser, m_btn_DeleteDen;
     TextInputEditText m_insertUserId , m_insertDenId;
 
@@ -87,7 +90,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         startingComponents();
-        denounces_fb();
+
     }
 
 
@@ -121,6 +124,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     private void startingComponents() {
         m_btnBack = getActivity().findViewById(R.id.btn_back);
         m_btnBack.setOnClickListener(this);
+        denounces_fb();
 
     }
 
@@ -191,10 +195,12 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     }
 
     private void denounces_fb() {
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("denounces");
         FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
         String user = auth.getCurrentUser().getUid();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -202,9 +208,13 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     String value = snapshot.child("userId").getValue().toString();
                     if (value.equals(user)){
                         Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
+                        dados.add(value);
                     }
-
-                };
+                }
+                AdapterDenounces adapterDenounces = new AdapterDenounces(dados);
+                RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_denounces);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.setAdapter(adapterDenounces);
             }
 
             @Override
@@ -212,6 +222,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
             }
         });
+
     }
 
 
