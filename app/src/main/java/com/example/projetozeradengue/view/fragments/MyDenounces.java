@@ -11,17 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
 import com.example.projetozeradengue.controller.ControllerUser;
-import com.example.projetozeradengue.core.AppUtil;
 import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.model.Denounces;
 import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -192,14 +191,19 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     }
 
     private void denounces_fb() {
-        Log.i("Dados Denúncia" , "denuncias do firebase");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("denounces");
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
+        String user = auth.getCurrentUser().getUid();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
-                    String value = snapshot.toString();
-                    Log.i("Dados Denúncia" , "listando denuncia"+value);
+                    String value = snapshot.child("userId").getValue().toString();
+                    if (value.equals(user)){
+                        Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
+                    }
+
                 };
             }
 
