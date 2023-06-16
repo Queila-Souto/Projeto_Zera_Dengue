@@ -206,9 +206,10 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     String value = snapshot.child("userId").getValue().toString();
+                    String street = snapshot.child("a_Street").getValue().toString();
                     if (value.equals(user)){
                         Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
-                        dados.add(value);
+                        dados.add(street);
                     }
                 }
                 AdapterDenounces adapterDenounces = new AdapterDenounces(dados);
