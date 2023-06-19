@@ -34,10 +34,9 @@
         <EditText
             android:id="@+id/username"
             style="@style/EditText"
-            android:backgroundTint="@color/luzes_da_cidade"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
-            android:textColorHighlight="@color/american_river"
+            android:textColorHighlight="@color/black"
             android:textColorLink="@color/american_river"
 
 
