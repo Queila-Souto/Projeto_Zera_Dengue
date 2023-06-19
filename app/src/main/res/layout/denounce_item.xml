@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imagedenounce"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/denuncia"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bairro"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/imagedenounce"
+        app:layout_constraintTop_toTopOf="@+id/imagedenounce" />
+
+    <TextView
+        android:id="@+id/labelcep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cep"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagedenounce"
+        app:layout_constraintTop_toBottomOf="@+id/itemtitle" />
+
+    <TextView
+        android:id="@+id/labelstreet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rua"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagedenounce"
+        app:layout_constraintTop_toBottomOf="@+id/labelcep" />
+
+    <TextView
+        android:id="@+id/labelcomplement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complemento"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagedenounce"
+        app:layout_constraintTop_toBottomOf="@+id/labelstreet" />
+
+    <TextView
+        android:id="@+id/labelid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Código"
+        android:textSize="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imagedenounce"
+        app:layout_constraintTop_toBottomOf="@+id/labelcomplement" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
