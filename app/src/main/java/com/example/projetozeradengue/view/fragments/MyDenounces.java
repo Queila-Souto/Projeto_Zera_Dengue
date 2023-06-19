@@ -16,11 +16,8 @@ import android.widget.TextView;
 
 import com.example.projetozeradengue.R;
 import com.example.projetozeradengue.controller.ControllerDenounces;
-import com.example.projetozeradengue.controller.ControllerUser;
 import com.example.projetozeradengue.datamodel.AdapterDenounces;
-import com.example.projetozeradengue.datamodel.DenouncesDataModel;
 import com.example.projetozeradengue.model.Denounces;
-import com.example.projetozeradengue.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +37,7 @@ import java.util.List;
  */
 public class MyDenounces extends Fragment implements View.OnClickListener {
     ControllerDenounces controllerDenounces;
-    List<String> dados = new ArrayList<>(); // Lista de dados a serem exibidos
+    List<Denounces> dados = new ArrayList<>(); // Lista de dados a serem exibidos
     MaterialButton m_btnBack, m_btn_DeleteUser, m_btn_DeleteDen;
     TextInputEditText m_insertUserId , m_insertDenId;
 
@@ -124,7 +121,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     private void startingComponents() {
         m_btnBack = getActivity().findViewById(R.id.btn_back);
         m_btnBack.setOnClickListener(this);
-        denounces_fb();
+        showDenounce();
 
     }
 
@@ -148,53 +145,8 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
             }
         }
 
-//    private void delete_denounce() {
-//        ControllerDenounces controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
-//       String denounceId = Integer.parseInt(m_insertDenId.getText().toString().trim());
-//
-//        denounce.setId(denounceId);
-//
-//        if (controllerDenounces.delete(denounce.getId())){
-//            Log.i(AppUtil.TAG, "excluido com sucesso");
-//            Toast.makeText(getActivity().getBaseContext(), "Denuncia excluida com sucesso", Toast.LENGTH_LONG).show();
-//            back();
-//        } else{
-//            Log.e(AppUtil.TAG, "erro ao excluir");
-//            Toast.makeText(getActivity().getBaseContext(), "Erro ao excluir denúncia", Toast.LENGTH_LONG).show();
-//
-//        }
-//
-//    }
 
-
-//    private void update_Denounce() {
-//        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
-//
-//        denounce.setId(1);
-//        denounce.setA_city("cidade alterada");
-
-//
-//        if (controllerDenounces.update(denounce)){
-//            Log.i(AppUtil.TAG, "atualizado com sucesso");
-//            Toast.makeText(getActivity().getBaseContext(), "Denuncia atualizada com sucesso", Toast.LENGTH_LONG).show();
-//
-//        } else{
-//            Log.e(AppUtil.TAG, "erro ao alterar denuncia");
-//            Toast.makeText(getActivity().getBaseContext(), "Erro ao alterar denúncia", Toast.LENGTH_LONG).show();
-//
-//        }
-//
-//    }
-
-    private void denounces_Show() {
-        Log.i("Dados Denúncia" , "teste");
-        controllerDenounces = new ControllerDenounces(getActivity().getBaseContext());
-        for (Denounces den: controllerDenounces.showDenounce(DenouncesDataModel.TABLE)) {
-            Log.i("Dados Denúncia" , " "+den.getId()+" "+den.getUserId()+" "+den.getCep()+" "+den.getA_Street()+" "+den.getA_number()+" "+den.getA_complement()+" "+den.getA_district()+" "+den.getA_city()+" "+den.getA_state()+" "+den.getNote());
-        }
-    }
-
-    private void denounces_fb() {
+    private void showDenounce() {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("denounces");
         FirebaseAuth auth;
@@ -207,14 +159,29 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                 for (DataSnapshot snapshot : datasnapshot.getChildren()){
                     String value = snapshot.child("userId").getValue().toString();
                     String street = snapshot.child("a_Street").getValue().toString();
+                    String complement = snapshot.child("a_complement").getValue().toString();
+                    String district = snapshot.child("a_district").getValue().toString();
+                    String number = snapshot.child("a_number").getValue().toString();
+                    String cep = snapshot.child("cep").getValue().toString();
+                    String idDenounce = snapshot.child("id").getValue().toString();
+                    Denounces denuncias = new Denounces();
+
                     if (value.equals(user)){
                         Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
-                        dados.add(street);
+                        denuncias.setA_complement(denuncias.getA_complement());
+                        denuncias.setA_Street(street);
+                        denuncias.setA_complement(complement);
+                        denuncias.setA_district(district);
+                        denuncias.setA_number(number);
+                        denuncias.setCep(cep);
+                        denuncias.setId(idDenounce);
+                        dados.add(denuncias);
                     }
                 }
                 AdapterDenounces adapterDenounces = new AdapterDenounces(dados);
                 RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_denounces);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(adapterDenounces);
             }
 
