@@ -30,16 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyDenounces#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyDenounces extends Fragment implements View.OnClickListener {
-    ControllerDenounces controllerDenounces;
     List<Denounces> dados = new ArrayList<>(); // Lista de dados a serem exibidos
-    MaterialButton m_btnBack, m_btn_DeleteUser, m_btn_DeleteDen;
-    TextInputEditText m_insertUserId , m_insertDenId;
+    MaterialButton m_btnBack;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,16 +47,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyDenounces.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyDenounces newInstance(String param1, String param2) {
+     public static MyDenounces newInstance(String param1, String param2) {
         MyDenounces fragment = new MyDenounces();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -81,24 +65,17 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
         }
     }
 
-
-
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         startingComponents();
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_my_denounces, container, false);
     }
-
 
     @Override
     public void onResume() {
@@ -108,7 +85,6 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     }
 
     public void    title1(String title) {
-
         TextView mtitle = getActivity().findViewById(R.id.title);
         mtitle.setText(title);
     }
@@ -122,37 +98,26 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
         m_btnBack = getActivity().findViewById(R.id.btn_back);
         m_btnBack.setOnClickListener(this);
         showDenounce();
-
     }
 
     private void back() {
-
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new MainFragment() ).commit();
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
     @Override
     public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_back:
                     back();
                     break;
-
             }
         }
 
-
     private void showDenounce() {
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("denounces");
         FirebaseAuth auth;
         auth = FirebaseAuth.getInstance();
         String user = auth.getCurrentUser().getUid();
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -164,8 +129,10 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     String number = snapshot.child("a_number").getValue().toString();
                     String cep = snapshot.child("cep").getValue().toString();
                     String idDenounce = snapshot.child("id").getValue().toString();
+                    String note = snapshot.child("note").getValue().toString();
+                    String city = snapshot.child("a_city").getValue().toString();
+                    String state = snapshot.child("a_state").getValue().toString();
                     Denounces denuncias = new Denounces();
-
                     if (value.equals(user)){
                         Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
                         denuncias.setA_complement(denuncias.getA_complement());
@@ -175,9 +142,13 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                         denuncias.setA_number(number);
                         denuncias.setCep(cep);
                         denuncias.setId(idDenounce);
+                        denuncias.setA_state(state);
+                        denuncias.setA_city(city);
+                        denuncias.setNote(note);
                         dados.add(denuncias);
                     }
                 }
+
                 AdapterDenounces adapterDenounces = new AdapterDenounces(dados);
                 RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_denounces);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -187,10 +158,8 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
     }
 
 

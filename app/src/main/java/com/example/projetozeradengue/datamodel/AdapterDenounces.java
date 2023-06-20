@@ -21,20 +21,22 @@ public class AdapterDenounces extends RecyclerView.Adapter<AdapterDenounces.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemtitle;
-        public TextView ceplabel;
+        public TextView district;
         public TextView adresslabel;
         public TextView complementlabel;
+        public TextView citylabel;
+        public TextView notelabel;
         public TextView idlabel;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemtitle = itemView.findViewById(R.id.itemtitle);
-            ceplabel = itemView.findViewById(R.id.labelcep);
+            district = itemView.findViewById(R.id.labelbairro);
             adresslabel = itemView.findViewById(R.id.labelstreet);
             complementlabel = itemView.findViewById(R.id.labelcomplement);
             idlabel = itemView.findViewById(R.id.labelid);
-
+            citylabel = itemView.findViewById(R.id.labelcity);
+            notelabel = itemView.findViewById(R.id.labelnote);
         }
     }
 
@@ -47,11 +49,13 @@ public class AdapterDenounces extends RecyclerView.Adapter<AdapterDenounces.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Denounces dado = denouncesdata.get(position);
-        holder.itemtitle.setText(dado.getA_district());
-        holder.ceplabel.setText(dado.getCep());
+        holder.itemtitle.setText(dado.getCep());
+        holder.district.setText(dado.getCep());
         holder.adresslabel.setText(dado.getA_Street()+" número "+ dado.getA_number());
         holder.complementlabel.setText(dado.getA_complement());
         holder.idlabel.setText(dado.getId());
+        holder.citylabel.setText(dado.getA_city()+" - "+dado.getA_state());
+        holder.notelabel.setText("Obs: "+dado.getNote());
     }
 
     @Override
