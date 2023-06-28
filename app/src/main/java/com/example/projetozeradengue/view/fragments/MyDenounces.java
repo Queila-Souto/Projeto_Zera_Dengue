@@ -81,7 +81,7 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         title1("Minhas Denúncias");
-        title2(("Encontre aqui suas denúncias cadastradas"));
+        title2(("Aqui estão suas denúncias"));
     }
 
     public void    title1(String title) {
@@ -134,7 +134,6 @@ public class MyDenounces extends Fragment implements View.OnClickListener {
                     String state = snapshot.child("a_state").getValue().toString();
                     Denounces denuncias = new Denounces();
                     if (value.equals(user)){
-                        Log.i("Dados Denúncia" , "listando denuncia do usuário corrente "+value);
                         denuncias.setA_complement(denuncias.getA_complement());
                         denuncias.setA_Street(street);
                         denuncias.setA_complement(complement);

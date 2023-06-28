@@ -18,16 +18,9 @@
     </FrameLayout>
 
     <FrameLayout
-
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout1" />
-
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
