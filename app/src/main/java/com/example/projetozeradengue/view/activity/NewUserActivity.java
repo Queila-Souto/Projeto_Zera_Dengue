@@ -26,9 +26,6 @@ public class NewUserActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout2,new Cadastro()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout1,new Header()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout3,new Footer()).commit();
-
-
-
     }
 
 
