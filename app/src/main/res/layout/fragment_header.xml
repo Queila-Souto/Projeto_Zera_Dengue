@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/fundo"
     tools:context=".view.fragments.Header">
@@ -14,13 +14,15 @@
     android:id="@+id/title"
     style="@style/Title"
     android:text=""
-
+    android:textSize="18sp"
     tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/title2"
             style="@style/Title2"
             android:text=""
+            android:layout_margin="8dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintEnd_toEndOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@id/title"
@@ -29,7 +31,7 @@
 <ImageView
     android:id="@+id/logo"
     android:layout_width="150dp"
-    android:layout_height="match_parent"
+    android:layout_height="150dp"
     android:src="@drawable/logo"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@null"

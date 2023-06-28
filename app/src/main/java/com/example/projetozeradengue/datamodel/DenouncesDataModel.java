@@ -22,7 +22,7 @@ public class DenouncesDataModel {
     public static final String REFERENCES_Column= UserDataModel.ID;
 
     //PASSO 2 - ATRIBUINDO OS CAMPOS(COLUNAS)
-    public static final String ID = "codigo_denuncia";
+    public static final String ID = "id";
     public static final String USER_ID = "cod_usuario";
     public static final String FOREIGN_KEY="fk_userid";
     public static final String STREET = "rua";
@@ -31,7 +31,6 @@ public class DenouncesDataModel {
     public static final String CITY = "cidade";
     public static final String STATE = "estado";
     public static final String COMPLEMENT = "complemento";
-    public static final String COORDINATES = "coordinates";
     public static final String CEP = "CEP";
     public static final String NOTES = "Obs";
 
@@ -41,7 +40,7 @@ public class DenouncesDataModel {
     public static String createTable(){
         Log.d(AppUtil.TAG , "Denounces Data Model: Criando tabela de denúncias");
 
-        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" integer primary key autoincrement, "+USER_ID+" integer, "+STREET+" text, "+NUMBER+" text, "+COMPLEMENT+" text, "+DISTRICT+" text, "+CITY+ " text, "+ STATE+" text, "+COORDINATES+" text, "+CEP+" integer, "+NOTES+" text, "+ "CONSTRAINT "+FOREIGN_KEY+" FOREIGN KEY ("+USER_ID+") REFERENCES "+ REFERENCES_Table+" ("+REFERENCES_Column+") )";
+        queryCreateTable = "CREATE TABLE "+TABLE+" ("+ID+" text primary key, "+USER_ID+" integer, "+STREET+" text, "+NUMBER+" text, "+COMPLEMENT+" text, "+DISTRICT+" text, "+CITY+ " text, "+ STATE+" text, "+CEP+" integer, "+NOTES+" text, "+ "CONSTRAINT "+FOREIGN_KEY+" FOREIGN KEY ("+USER_ID+") REFERENCES "+ REFERENCES_Table+" ("+REFERENCES_Column+") )";
 
 
         return  queryCreateTable;

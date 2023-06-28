@@ -1,46 +1,57 @@
 package com.example.projetozeradengue.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import com.example.projetozeradengue.R;
-import com.example.projetozeradengue.controller.ControllerDenounces;
-import com.example.projetozeradengue.controller.ControllerUser;
-import com.example.projetozeradengue.core.AppUtil;
-import com.example.projetozeradengue.model.User;
+import com.example.projetozeradengue.datasource.AppDatabase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Splash extends AppCompatActivity {
 
-int time = 5000;
-ControllerUser controllerUser;
-ControllerDenounces controllerDenounces;
-
+    int time = 10000;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        goToActivity();
-        controllerUser = new ControllerUser(getApplicationContext());
-        Log.d(AppUtil.TAG , "Splash: Objeto controlador de usuario estanciado/ conectado");
-        controllerDenounces = new ControllerDenounces(getApplicationContext());
-        Log.d(AppUtil.TAG , "Splash: Objeto controlador de denuncias estanciado/ conectado");
-
+        new CarregamentoParalelo().execute();
     }
 
-    private void goToActivity(){
-    Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
+    @SuppressLint("StaticFieldLeak")
+    private class CarregamentoParalelo extends AsyncTask<Void, Void, Void> {
+
         @Override
-        public void run() {
+        protected Void doInBackground(Void... voids) {
+            new AppDatabase(getApplicationContext());
+            puxarDados();
+            return null;
+        }
+
+        private void puxarDados() {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            goToActivity();
+        }
+    }
+
+    private void goToActivity() {
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
             Intent intent = new Intent(Splash.this, LoginActivity.class);
             startActivity(intent);
             finish();
-        }
-    },time);
+        }, time);
 
     }
 

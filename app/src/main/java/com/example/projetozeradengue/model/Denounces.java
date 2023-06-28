@@ -1,8 +1,15 @@
 package com.example.projetozeradengue.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
-public class Denounces {
+import com.example.projetozeradengue.core.AppUtil;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class Denounces implements Parcelable{
     private String a_Street;
     private String a_number;
     private String a_district;
@@ -11,11 +18,15 @@ public class Denounces {
     private String a_coord;
     private String note;
     private String a_state;
-    private int id, a_cep;
-    private Integer userId;
+    private String a_cep;
+    private String id;
+    private String userId;
+
+
 
   //CONSTRUTOR
-    public Denounces(@Nullable Integer userId, int cep, String street, String number, @Nullable String complement, String district, String city, String state,String note ) {
+    public Denounces(@Nullable String id,@Nullable String userId, String cep, String street, String number, @Nullable String complement, String district, String city, String state, String note ) {
+       this.id = id;
         this.userId = userId;
         this.a_cep = cep;
         this.a_Street = street;
@@ -31,35 +42,36 @@ public class Denounces {
 
     }
 
-
     //GETTERES E SETTERES
     public String getA_state() {
         return a_state;
     }
+
     public void setA_state(String a_state) {
         this.a_state = a_state;
     }
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getCep() {
+    public String getCep() {
         return a_cep;
     }
 
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.a_cep = cep;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(@Nullable Integer userId) {
+    public void setUserId(@Nullable String userId) {
         this.userId = userId;
     }
 
@@ -118,4 +130,63 @@ public class Denounces {
     public void setNote(String note) {
         this.note = note;
     }
+
+
+
+    //Database Web
+    public void save(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child(AppUtil.REALTIME_DATABASE_DENOUNCE).child(getId()).setValue(this);
+
+    }
+    //  IMPLEMENTAÇÃO DE PARCELABLE
+
+    //Construtor usado pelo android para criar a nossa classe, neste caso Denounce
+
+
+    protected Denounces(Parcel in) {
+        a_Street = in.readString();
+        a_number = in.readString();
+        a_district = in.readString();
+        a_complement = in.readString();
+        a_city = in.readString();
+        a_coord = in.readString();
+        note = in.readString();
+        a_state = in.readString();
+        a_cep = in.readString();
+        id = in.readString();
+        userId = in.readString();
+    }
+
+    public static final Creator<Denounces> CREATOR = new Creator<Denounces>() {
+        @Override
+        public Denounces createFromParcel(Parcel in) {
+            return new Denounces(in);
+        }
+
+        @Override
+        public Denounces[] newArray(int size) {
+            throw new UnsupportedOperationException();
+            //return new User[size];
+        } };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(a_Street);
+            parcel.writeString(a_number);
+            parcel.writeString(a_district);
+            parcel.writeString(a_complement);
+            parcel.writeString(a_city);
+            parcel.writeString(a_coord);
+            parcel.writeString(note);
+            parcel.writeString(a_state);
+            parcel.writeString(a_cep);
+            parcel.writeString(id);
+            parcel.writeString(userId);
+        }
 }

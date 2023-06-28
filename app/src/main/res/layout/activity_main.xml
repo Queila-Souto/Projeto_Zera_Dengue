@@ -8,26 +8,19 @@
     android:background="@color/fundo">
 
     <FrameLayout
-        android:background="@color/blue"
         android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        >
 
     </FrameLayout>
 
     <FrameLayout
-        android:background="@color/vermelho"
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout1" />
-
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
